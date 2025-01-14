@@ -278,7 +278,7 @@ Mask Update
 2025-01-14 13:21:29.539 | INFO     | __main__:main:508 - Eval loss at step 5000: 3.4429025650024414,tokens_seen: 499891938
 
 loss at 10002 1.6796875
-Update steps:  29%|██████▍               | 5802/20000 [34:12<1:17:02,  3.07it/s]
+Update steps:  30%|██████▌               | 6000/20000 [35:18<1:19:50,  2.92it/s]2025-01-14 13:27:00.013 | INFO     | __main__:main:496 - Performing evaluation at step 6000
 
 loss at 10202 1.765625
 
@@ -299,3 +299,63 @@ loss at 11202 1.7421875
 loss at 11402 1.7578125
 
 loss at 11602 1.7421875
+
+loss at 11802 1.7265625
+lr 0.0006839089402558932
+lr 0.0006839089402558932
+Mask overlap ratio: 1.00
+Mask Update
+2025-01-14 13:27:03.322 | INFO     | __main__:evaluate_model:105 - Loaded validation dataset in 3.31 seconds
+2025-01-14 13:27:03.324 | INFO     | __main__:evaluate_model:121 - Eval set prepared in 3.31 seconds
+2025-01-14 13:27:24.805 | INFO     | __main__:main:508 - Eval loss at step 6000: 3.389342188835144,tokens_seen: 599873704
+
+loss at 12002 1.71875
+Update steps:  35%|███████▋              | 7000/20000 [41:13<1:14:11,  2.92it/s]2025-01-14 13:32:54.575 | INFO     | __main__:main:496 - Performing evaluation at step 7000
+
+loss at 12202 1.6640625
+
+loss at 12402 1.6640625
+
+loss at 12602 1.796875
+
+loss at 12802 1.7421875
+lr 0.0006612105115171021
+lr 0.0006612105115171021
+Mask overlap ratio: 1.00
+Mask Update
+
+loss at 13002 1.6484375
+
+loss at 13202 1.7421875
+
+loss at 13402 1.6875
+
+loss at 13602 1.6640625
+
+loss at 13802 1.6640625
+lr 0.0006370009906801411
+lr 0.0006370009906801411
+Mask overlap ratio: 1.00
+Mask Update
+2025-01-14 13:32:58.459 | INFO     | __main__:evaluate_model:105 - Loaded validation dataset in 3.88 seconds
+2025-01-14 13:32:58.461 | INFO     | __main__:evaluate_model:121 - Eval set prepared in 3.88 seconds
+2025-01-14 13:33:20.471 | INFO     | __main__:main:508 - Eval loss at step 7000: 3.347986578941345,tokens_seen: 699878274
+
+loss at 14002 1.6953125
+Update steps:  38%|████████▍             | 7636/20000 [45:08<1:08:02,  3.03it/s]
+
+loss at 14202 1.734375
+
+loss at 14402 1.71875
+
+loss at 14602 1.6875
+
+loss at 14802 1.6640625
+lr 0.000611445753320458
+lr 0.000611445753320458
+Mask overlap ratio: 1.00
+Mask Update
+
+loss at 15002 1.6953125
+
+loss at 15202 1.6640625
