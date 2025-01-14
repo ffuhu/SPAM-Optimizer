@@ -1,0 +1,11 @@
+{"time":"2025-01-14T10:37:16.816924029+01:00","level":"INFO","msg":"using version","core version":"0.18.5"}
+{"time":"2025-01-14T10:37:16.816999149+01:00","level":"INFO","msg":"created symlink","path":"/gpfs/home2/huangti/SPAM_v2/wandb/run-20250114_103716-d8l12ee9/logs/debug-core.log"}
+{"time":"2025-01-14T10:37:16.924431671+01:00","level":"INFO","msg":"created new stream","id":"d8l12ee9"}
+{"time":"2025-01-14T10:37:16.924493961+01:00","level":"INFO","msg":"stream: started","id":"d8l12ee9"}
+{"time":"2025-01-14T10:37:16.924527141+01:00","level":"INFO","msg":"sender: started","stream_id":"d8l12ee9"}
+{"time":"2025-01-14T10:37:16.924511181+01:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"d8l12ee9"}}
+{"time":"2025-01-14T10:37:16.924526281+01:00","level":"INFO","msg":"handler: started","stream_id":{"value":"d8l12ee9"}}
+{"time":"2025-01-14T10:37:17.165511915+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-01-14T11:57:59.374590478+01:00","level":"INFO","msg":"stream: closing","id":"d8l12ee9"}
+{"time":"2025-01-14T11:57:59.374622218+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-01-14T11:57:59.375183838+01:00","level":"INFO","msg":"Stopped system monitor"}

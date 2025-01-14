@@ -1,0 +1,19 @@
+{"time":"2024-12-25T06:47:07.415455433+01:00","level":"INFO","msg":"using version","core version":"0.18.5"}
+{"time":"2024-12-25T06:47:07.415523982+01:00","level":"INFO","msg":"created symlink","path":"/gpfs/home2/huangti/SPAM_v2/wandb/run-20241225_064707-zg3l74kh/logs/debug-core.log"}
+{"time":"2024-12-25T06:47:07.528247119+01:00","level":"INFO","msg":"created new stream","id":"zg3l74kh"}
+{"time":"2024-12-25T06:47:07.528320688+01:00","level":"INFO","msg":"stream: started","id":"zg3l74kh"}
+{"time":"2024-12-25T06:47:07.528392507+01:00","level":"INFO","msg":"handler: started","stream_id":{"value":"zg3l74kh"}}
+{"time":"2024-12-25T06:47:07.528370598+01:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"zg3l74kh"}}
+{"time":"2024-12-25T06:47:07.528454647+01:00","level":"INFO","msg":"sender: started","stream_id":"zg3l74kh"}
+{"time":"2024-12-25T06:47:07.80672819+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-25T10:32:06.639936387+01:00","level":"INFO","msg":"stream: closing","id":"zg3l74kh"}
+{"time":"2024-12-25T10:32:06.639971456+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-25T10:32:06.640904467+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-25T10:32:06.771991904+01:00","level":"WARN","msg":"No job ingredients found, not creating job artifact"}
+{"time":"2024-12-25T10:32:06.772026774+01:00","level":"WARN","msg":"No source type found, not creating job artifact"}
+{"time":"2024-12-25T10:32:06.772037124+01:00","level":"INFO","msg":"sender: sendDefer: no job artifact to save"}
+{"time":"2024-12-25T10:32:07.415700014+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-25T10:32:07.581664898+01:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"zg3l74kh"}}
+{"time":"2024-12-25T10:32:07.581713828+01:00","level":"INFO","msg":"sender: closed","stream_id":"zg3l74kh"}
+{"time":"2024-12-25T10:32:07.581702828+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"zg3l74kh"}}
+{"time":"2024-12-25T10:32:07.582017025+01:00","level":"INFO","msg":"stream: closed","id":"zg3l74kh"}

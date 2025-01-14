@@ -1,0 +1,19 @@
+{"time":"2025-01-14T10:08:43.963005328+01:00","level":"INFO","msg":"using version","core version":"0.18.5"}
+{"time":"2025-01-14T10:08:43.963068008+01:00","level":"INFO","msg":"created symlink","path":"/gpfs/home2/huangti/SPAM_v2/wandb/run-20250114_100843-qbwb8zrc/logs/debug-core.log"}
+{"time":"2025-01-14T10:08:44.070715166+01:00","level":"INFO","msg":"created new stream","id":"qbwb8zrc"}
+{"time":"2025-01-14T10:08:44.070773816+01:00","level":"INFO","msg":"stream: started","id":"qbwb8zrc"}
+{"time":"2025-01-14T10:08:44.070807026+01:00","level":"INFO","msg":"sender: started","stream_id":"qbwb8zrc"}
+{"time":"2025-01-14T10:08:44.070793126+01:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"qbwb8zrc"}}
+{"time":"2025-01-14T10:08:44.070806966+01:00","level":"INFO","msg":"handler: started","stream_id":{"value":"qbwb8zrc"}}
+{"time":"2025-01-14T10:08:44.311217564+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-01-14T10:09:01.083396227+01:00","level":"INFO","msg":"stream: closing","id":"qbwb8zrc"}
+{"time":"2025-01-14T10:09:01.083450377+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-01-14T10:09:01.083992557+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-01-14T10:09:01.24624445+01:00","level":"WARN","msg":"No job ingredients found, not creating job artifact"}
+{"time":"2025-01-14T10:09:01.24627926+01:00","level":"WARN","msg":"No source type found, not creating job artifact"}
+{"time":"2025-01-14T10:09:01.24628699+01:00","level":"INFO","msg":"sender: sendDefer: no job artifact to save"}
+{"time":"2025-01-14T10:09:01.656006331+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-01-14T10:09:01.828359975+01:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"qbwb8zrc"}}
+{"time":"2025-01-14T10:09:01.828442465+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"qbwb8zrc"}}
+{"time":"2025-01-14T10:09:01.828454085+01:00","level":"INFO","msg":"sender: closed","stream_id":"qbwb8zrc"}
+{"time":"2025-01-14T10:09:01.828725405+01:00","level":"INFO","msg":"stream: closed","id":"qbwb8zrc"}

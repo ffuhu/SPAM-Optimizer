@@ -1,0 +1,476 @@
+[32m2025-01-14 12:12:34.789[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m209[0m - [1mUsing dist with rank 0 (only rank 0 will log)[0m
+[32m2025-01-14 12:12:34.789[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m210[0m - [1m****************************************[0m
+[32m2025-01-14 12:12:34.789[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m211[0m - [1mStarting training with the arguments[0m
+[32m2025-01-14 12:12:34.789[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1mmodel_config                   configs/llama_60m.json[0m
+model_config                   configs/llama_60m.json
+[32m2025-01-14 12:12:34.789[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1muse_hf_model                   False[0m
+use_hf_model                   False
+[32m2025-01-14 12:12:34.790[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1mcontinue_from                  None[0m
+continue_from                  None
+[32m2025-01-14 12:12:34.790[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1mbatch_size                     128[0m
+batch_size                     128
+[32m2025-01-14 12:12:34.790[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1mgradient_accumulation          4[0m
+gradient_accumulation          4
+[32m2025-01-14 12:12:34.790[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1mtotal_batch_size               512[0m
+total_batch_size               512
+[32m2025-01-14 12:12:34.790[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1mmax_length                     256[0m
+max_length                     256
+[32m2025-01-14 12:12:34.790[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1moptimizer                      SPAM[0m
+optimizer                      SPAM
+[32m2025-01-14 12:12:34.790[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1mlr                             0.001[0m
+lr                             0.001
+[32m2025-01-14 12:12:34.790[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1mscheduler                      cosine[0m
+scheduler                      cosine
+[32m2025-01-14 12:12:34.790[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1mmin_lr_ratio                   0.1[0m
+min_lr_ratio                   0.1
+[32m2025-01-14 12:12:34.790[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1mactivation_checkpointing       False[0m
+activation_checkpointing       False
+[32m2025-01-14 12:12:34.791[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1mweight_decay                   0.0[0m
+weight_decay                   0.0
+[32m2025-01-14 12:12:34.791[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1mwarmup_steps                   1000[0m
+warmup_steps                   1000
+[32m2025-01-14 12:12:34.791[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1meval_every                     1000[0m
+eval_every                     1000
+[32m2025-01-14 12:12:34.791[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1mnum_training_steps             10000[0m
+num_training_steps             10000
+[32m2025-01-14 12:12:34.791[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1mmax_train_tokens               None[0m
+max_train_tokens               None
+[32m2025-01-14 12:12:34.791[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1msave_every                     2000[0m
+save_every                     2000
+[32m2025-01-14 12:12:34.791[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1msave_dir                       /scratch-shared/HTJ2/checkpoints/new0_9392965[0m
+save_dir                       /scratch-shared/HTJ2/checkpoints/new0_9392965
+[32m2025-01-14 12:12:34.791[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1mtags                           None[0m
+tags                           None
+[32m2025-01-14 12:12:34.791[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1mdtype                          bfloat16[0m
+dtype                          bfloat16
+[32m2025-01-14 12:12:34.791[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1mworkers                        8[0m
+workers                        8
+[32m2025-01-14 12:12:34.791[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1mseed                           0[0m
+seed                           0
+[32m2025-01-14 12:12:34.791[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1mname                           test[0m
+name                           test
+[32m2025-01-14 12:12:34.791[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1mmodel_type                     llama[0m
+model_type                     llama
+[32m2025-01-14 12:12:34.792[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1mgrad_clipping                  0.0[0m
+grad_clipping                  0.0
+[32m2025-01-14 12:12:34.792[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1mbeta1                          0.0[0m
+beta1                          0.0
+[32m2025-01-14 12:12:34.792[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1mgalore_scale                   1.0[0m
+galore_scale                   1.0
+[32m2025-01-14 12:12:34.792[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1msingle_gpu                     False[0m
+single_gpu                     False
+[32m2025-01-14 12:12:34.792[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1mload_local                     False[0m
+load_local                     False
+[32m2025-01-14 12:12:34.792[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1mwarmup_epoch                   150[0m
+warmup_epoch                   150
+[32m2025-01-14 12:12:34.792[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1mthreshold                      5000.0[0m
+threshold                      5000.0
+[32m2025-01-14 12:12:34.792[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1mgrad_accu_steps                20[0m
+grad_accu_steps                20
+[32m2025-01-14 12:12:34.792[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1mdensity                        1.0[0m
+density                        1.0
+[32m2025-01-14 12:12:34.792[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m213[0m - [1mupdate_gap                     500[0m
+update_gap                     500
+[32m2025-01-14 12:12:34.792[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m215[0m - [1m****************************************[0m
+Resolving data files: 100%|██████████████████████████████████████████████████████████████████████| 1024/1024 [00:02<00:00, 383.09it/s]
+Resolving data files: 100%|███████████████████████████████████████████████████████████████████| 1024/1024 [00:00<00:00, 547059.90it/s]
+[32m2025-01-14 12:12:42.639[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m228[0m - [1mShuffling data with seed 42[0m
+/home/huangti/miniconda3/envs/spam/lib/python3.11/site-packages/huggingface_hub/file_download.py:797: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+  warnings.warn(
+[34m[1mwandb[0m: [33mWARNING[0m Saving files without folders. If you want to preserve subdirectories pass base_path to wandb.save, i.e. wandb.save("/mnt/folder/file.h5", base_path="/mnt")
+Update steps:   0%|                                   | 0/10000 [00:00<?, ?it/s][32m2025-01-14 12:12:44.130[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m345[0m - [1m
+LlamaForCausalLM(
+  (model): LlamaModel(
+    (embed_tokens): Embedding(32000, 512, padding_idx=31999)
+    (layers): ModuleList(
+      (0-7): 8 x LlamaDecoderLayer(
+        (self_attn): LlamaAttention(
+          (q_proj): Linear(in_features=512, out_features=512, bias=False)
+          (k_proj): Linear(in_features=512, out_features=512, bias=False)
+          (v_proj): Linear(in_features=512, out_features=512, bias=False)
+          (o_proj): Linear(in_features=512, out_features=512, bias=False)
+          (rotary_emb): LlamaRotaryEmbedding()
+        )
+        (mlp): LlamaMLP(
+          (gate_proj): Linear(in_features=512, out_features=1376, bias=False)
+          (down_proj): Linear(in_features=1376, out_features=512, bias=False)
+          (up_proj): Linear(in_features=512, out_features=1376, bias=False)
+          (act_fn): SiLUActivation()
+        )
+        (input_layernorm): LlamaRMSNorm()
+        (post_attention_layernorm): LlamaRMSNorm()
+      )
+    )
+    (norm): LlamaRMSNorm()
+  )
+  (lm_head): Linear(in_features=512, out_features=32000, bias=False)
+)
+[0m
+[32m2025-01-14 12:12:44.130[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m346[0m - [1mTotal params: 58.07M[0m
+[32m2025-01-14 12:12:44.130[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m347[0m - [1mTrainable params: 58.07M[0m
+[32m2025-01-14 12:12:44.130[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m350[0m - [1mSaving model to /scratch-shared/HTJ2/checkpoints/new0_9392965 every 2000 update steps[0m
+/gpfs/home2/huangti/SPAM_v2/galore_torch/SPAM.py:104: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use `torch.optim.AdamW` instead, or set `no_deprecation_warning=True` to disable this warning.
+  warnings.warn(
+density 1.0
+/home/huangti/miniconda3/envs/spam/lib/python3.11/site-packages/torch/autograd/graph.py:825: UserWarning: cuDNN SDPA backward got grad_output.strides() != output.strides(), attempting to materialize a grad_output with matching strides... (Triggered internally at /opt/conda/conda-bld/pytorch_1728945379270/work/aten/src/ATen/native/cudnn/MHA.cpp:674.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+
+loss at 4 2.625
+Update steps:   5%|█▎                       | 500/10000 [02:56<55:34,  2.85it/s]/home/huangti/miniconda3/envs/spam/lib/python3.11/site-packages/torch/optim/lr_scheduler.py:224: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+
+loss at 404 1.90625
+
+loss at 804 1.75
+
+loss at 1204 1.5703125
+
+loss at 1604 1.453125
+lr 0.000498
+lr 0.000498
+Mask overlap ratio: 1.00
+Mask Update
+  warnings.warn(
+/home/huangti/miniconda3/envs/spam/lib/python3.11/site-packages/torch/optim/lr_scheduler.py:240: UserWarning: The epoch parameter in `scheduler.step()` was not necessary and is being deprecated where possible. Please use `scheduler.step()` to step the scheduler. During the deprecation, if epoch is different from None, the closed form is used instead of the new chainable form, where available. Please open an issue if you are unable to replicate your use case: https://github.com/pytorch/pytorch/issues/new/choose.
+  warnings.warn(EPOCH_DEPRECATION_WARNING, UserWarning)
+
+loss at 2004 1.3515625
+Update steps:  10%|██▍                     | 1000/10000 [05:47<52:05,  2.88it/s][32m2025-01-14 12:18:32.059[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m496[0m - [1mPerforming evaluation at step 1000[0m
+
+loss at 2404 1.3125
+
+loss at 2804 1.2109375
+
+loss at 3204 1.1484375
+
+loss at 3604 1.1171875
+lr 0.000998
+lr 0.000998
+Mask overlap ratio: 1.00
+Mask Update
+Resolving data files: 100%|██████████████████████████████████████████████████████████████████████| 1024/1024 [00:01<00:00, 518.57it/s]
+Resolving data files: 100%|█████████████████████████████████████████████████████████████████████| 1024/1024 [00:00<00:00, 1339.19it/s]
+[32m2025-01-14 12:18:37.915[0m | [1mINFO    [0m | [36m__main__[0m:[36mevaluate_model[0m:[36m105[0m - [1mLoaded validation dataset in 5.86 seconds[0m
+[32m2025-01-14 12:18:37.917[0m | [1mINFO    [0m | [36m__main__[0m:[36mevaluate_model[0m:[36m121[0m - [1mEval set prepared in 5.86 seconds[0m
+[32m2025-01-14 12:19:12.696[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m508[0m - [1mEval loss at step 1000: 4.284367561340332,tokens_seen: 99979486[0m
+
+loss at 4004 1.0703125
+Update steps:  20%|████▊                   | 2000/10000 [12:08<46:13,  2.88it/s][32m2025-01-14 12:24:53.371[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m496[0m - [1mPerforming evaluation at step 2000[0m
+
+loss at 4404 1.0546875
+
+loss at 4804 1.0390625
+
+loss at 5204 1.015625
+
+loss at 5604 1.0
+lr 0.0009932179340387385
+lr 0.0009932179340387385
+Mask overlap ratio: 1.00
+Mask Update
+
+loss at 6004 1.0
+
+loss at 6404 0.984375
+
+loss at 6804 0.984375
+
+loss at 7204 1.0
+
+loss at 7604 0.9609375
+lr 0.0009729690250930731
+lr 0.0009729690250930731
+Mask overlap ratio: 1.00
+Mask Update
+Resolving data files: 100%|██████████████████████████████████████████████████████████████████████| 1024/1024 [00:02<00:00, 395.88it/s]
+Resolving data files: 100%|███████████████████████████████████████████████████████████████████| 1024/1024 [00:00<00:00, 555120.50it/s]
+[32m2025-01-14 12:24:58.871[0m | [1mINFO    [0m | [36m__main__[0m:[36mevaluate_model[0m:[36m105[0m - [1mLoaded validation dataset in 5.50 seconds[0m
+[32m2025-01-14 12:24:58.872[0m | [1mINFO    [0m | [36m__main__[0m:[36mevaluate_model[0m:[36m121[0m - [1mEval set prepared in 5.50 seconds[0m
+[32m2025-01-14 12:25:30.881[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m508[0m - [1mEval loss at step 2000: 3.8605830669403076,tokens_seen: 199880081[0m
+
+loss at 8004 0.984375
+Update steps:  30%|███████▏                | 3000/10000 [18:27<40:47,  2.86it/s][32m2025-01-14 12:31:11.819[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m496[0m - [1mPerforming evaluation at step 3000[0m
+
+loss at 8404 0.98046875
+
+loss at 8804 0.97265625
+
+loss at 9204 0.97265625
+
+loss at 9604 0.9375
+lr 0.0009398684163526084
+lr 0.0009398684163526084
+Mask overlap ratio: 1.00
+Mask Update
+
+loss at 10004 0.9609375
+
+loss at 10404 0.91796875
+
+loss at 10804 0.93359375
+
+loss at 11204 0.94140625
+
+loss at 11604 0.91796875
+lr 0.0008949218530642075
+lr 0.0008949218530642075
+Mask overlap ratio: 1.00
+Mask Update
+Resolving data files: 100%|██████████████████████████████████████████████████████████████████████| 1024/1024 [00:02<00:00, 389.45it/s]
+Resolving data files: 100%|███████████████████████████████████████████████████████████████████| 1024/1024 [00:00<00:00, 460536.92it/s]
+[32m2025-01-14 12:31:18.609[0m | [1mINFO    [0m | [36m__main__[0m:[36mevaluate_model[0m:[36m105[0m - [1mLoaded validation dataset in 6.79 seconds[0m
+[32m2025-01-14 12:31:18.610[0m | [1mINFO    [0m | [36m__main__[0m:[36mevaluate_model[0m:[36m121[0m - [1mEval set prepared in 6.79 seconds[0m
+[32m2025-01-14 12:31:51.234[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m508[0m - [1mEval loss at step 3000: 3.7148146629333496,tokens_seen: 299903185[0m
+
+loss at 12004 0.921875
+Update steps:  40%|█████████▌              | 4000/10000 [24:47<34:51,  2.87it/s][32m2025-01-14 12:37:32.659[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m496[0m - [1mPerforming evaluation at step 4000[0m
+
+loss at 12404 0.9296875
+
+loss at 12804 0.9140625
+
+loss at 13204 0.92578125
+
+loss at 13604 0.921875
+lr 0.0008394950138093299
+lr 0.0008394950138093299
+Mask overlap ratio: 1.00
+Mask Update
+
+loss at 14004 0.8984375
+
+loss at 14404 0.92578125
+
+loss at 14804 0.9140625
+
+loss at 15204 0.90625
+
+loss at 15604 0.9140625
+lr 0.0007752720150514012
+lr 0.0007752720150514012
+Mask overlap ratio: 1.00
+Mask Update
+Resolving data files: 100%|███████████████████████████████████████████████████████████████████| 1024/1024 [00:00<00:00, 544355.80it/s]
+Resolving data files: 100%|████████████████████████████████████████████████████████████████████| 1024/1024 [00:00<00:00, 59305.55it/s]
+[32m2025-01-14 12:37:36.438[0m | [1mINFO    [0m | [36m__main__[0m:[36mevaluate_model[0m:[36m105[0m - [1mLoaded validation dataset in 3.78 seconds[0m
+[32m2025-01-14 12:37:36.439[0m | [1mINFO    [0m | [36m__main__[0m:[36mevaluate_model[0m:[36m121[0m - [1mEval set prepared in 3.78 seconds[0m
+[32m2025-01-14 12:38:08.634[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m508[0m - [1mEval loss at step 4000: 3.6238701343536377,tokens_seen: 399934286[0m
+
+loss at 16004 0.92578125
+Update steps:  50%|████████████            | 5000/10000 [31:06<29:02,  2.87it/s][32m2025-01-14 12:43:50.335[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m496[0m - [1mPerforming evaluation at step 5000[0m
+
+loss at 16404 0.91015625
+
+loss at 16804 0.92578125
+
+loss at 17204 0.91015625
+
+loss at 17604 0.90234375
+lr 0.0007042042401092756
+lr 0.0007042042401092756
+Mask overlap ratio: 1.00
+Mask Update
+
+loss at 18004 0.8828125
+
+loss at 18404 0.8828125
+
+loss at 18804 0.91015625
+
+loss at 19204 0.90234375
+
+loss at 19604 0.90625
+lr 0.0006284510473625401
+lr 0.0006284510473625401
+Mask overlap ratio: 1.00
+Mask Update
+Resolving data files: 100%|████████████████████████████████████████████████████████████████████| 1024/1024 [00:00<00:00, 23536.90it/s]
+Resolving data files: 100%|███████████████████████████████████████████████████████████████████| 1024/1024 [00:00<00:00, 529915.77it/s]
+[32m2025-01-14 12:43:54.002[0m | [1mINFO    [0m | [36m__main__[0m:[36mevaluate_model[0m:[36m105[0m - [1mLoaded validation dataset in 3.67 seconds[0m
+[32m2025-01-14 12:43:54.004[0m | [1mINFO    [0m | [36m__main__[0m:[36mevaluate_model[0m:[36m121[0m - [1mEval set prepared in 3.67 seconds[0m
+[32m2025-01-14 12:44:26.246[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m508[0m - [1mEval loss at step 5000: 3.5573177337646484,tokens_seen: 499986358[0m
+
+loss at 20004 0.8984375
+Update steps:  60%|██████████████▍         | 6000/10000 [37:25<23:13,  2.87it/s][32m2025-01-14 12:50:10.461[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m496[0m - [1mPerforming evaluation at step 6000[0m
+
+loss at 20404 0.859375
+
+loss at 20804 0.90234375
+
+loss at 21204 0.8984375
+
+loss at 21604 0.890625
+lr 0.0005503141592398394
+lr 0.0005503141592398394
+Mask overlap ratio: 1.00
+Mask Update
+
+loss at 22004 0.90234375
+
+loss at 22404 0.8984375
+
+loss at 22804 0.8984375
+
+loss at 23204 0.8828125
+
+loss at 23604 0.8828125
+lr 0.00047216772554760844
+lr 0.00047216772554760844
+Mask overlap ratio: 1.00
+Mask Update
+Resolving data files: 100%|███████████████████████████████████████████████████████████████████| 1024/1024 [00:00<00:00, 604414.20it/s]
+Resolving data files: 100%|██████████████████████████████████████████████████████████████████████| 1024/1024 [00:01<00:00, 817.36it/s]
+[32m2025-01-14 12:50:15.057[0m | [1mINFO    [0m | [36m__main__[0m:[36mevaluate_model[0m:[36m105[0m - [1mLoaded validation dataset in 4.60 seconds[0m
+[32m2025-01-14 12:50:15.058[0m | [1mINFO    [0m | [36m__main__[0m:[36mevaluate_model[0m:[36m121[0m - [1mEval set prepared in 4.60 seconds[0m
+[32m2025-01-14 12:50:47.040[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m508[0m - [1mEval loss at step 6000: 3.505221366882324,tokens_seen: 600040686[0m
+
+loss at 24004 0.8984375
+Update steps:  70%|████████████████▊       | 7000/10000 [43:43<17:26,  2.87it/s][32m2025-01-14 12:56:27.973[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m496[0m - [1mPerforming evaluation at step 7000[0m
+
+loss at 24404 0.890625
+
+loss at 24804 0.890625
+
+loss at 25204 0.91796875
+
+loss at 25604 0.87890625
+lr 0.0003963861861295821
+lr 0.0003963861861295821
+Mask overlap ratio: 1.00
+Mask Update
+
+loss at 26004 0.8984375
+
+loss at 26404 0.8515625
+
+loss at 26804 0.890625
+
+loss at 27204 0.88671875
+
+loss at 27604 0.84375
+lr 0.000325272124713668
+lr 0.000325272124713668
+Mask overlap ratio: 1.00
+Mask Update
+Resolving data files: 100%|███████████████████████████████████████████████████████████████████| 1024/1024 [00:00<00:00, 543254.15it/s]
+Resolving data files: 100%|███████████████████████████████████████████████████████████████████| 1024/1024 [00:00<00:00, 488453.01it/s]
+[32m2025-01-14 12:56:30.948[0m | [1mINFO    [0m | [36m__main__[0m:[36mevaluate_model[0m:[36m105[0m - [1mLoaded validation dataset in 2.97 seconds[0m
+[32m2025-01-14 12:56:30.949[0m | [1mINFO    [0m | [36m__main__[0m:[36mevaluate_model[0m:[36m121[0m - [1mEval set prepared in 2.98 seconds[0m
+[32m2025-01-14 12:57:03.273[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m508[0m - [1mEval loss at step 7000: 3.4645028114318848,tokens_seen: 700029429[0m
+
+loss at 28004 0.8828125
+Update steps:  80%|███████████████████▏    | 8000/10000 [50:00<11:36,  2.87it/s][32m2025-01-14 13:02:44.795[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m496[0m - [1mPerforming evaluation at step 8000[0m
+
+loss at 28404 0.87109375
+
+loss at 28804 0.8828125
+
+loss at 29204 0.84375
+
+loss at 29604 0.84765625
+lr 0.000260986306070537
+lr 0.000260986306070537
+Mask overlap ratio: 1.00
+Mask Update
+
+loss at 30004 0.83984375
+
+loss at 30404 0.8828125
+
+loss at 30804 0.875
+
+loss at 31204 0.87890625
+
+loss at 31604 0.859375
+lr 0.00020548202226946727
+lr 0.00020548202226946727
+Mask overlap ratio: 1.00
+Mask Update
+Resolving data files: 100%|███████████████████████████████████████████████████████████████████| 1024/1024 [00:00<00:00, 453965.47it/s]
+Resolving data files: 100%|███████████████████████████████████████████████████████████████████| 1024/1024 [00:00<00:00, 513322.25it/s]
+[32m2025-01-14 13:02:48.104[0m | [1mINFO    [0m | [36m__main__[0m:[36mevaluate_model[0m:[36m105[0m - [1mLoaded validation dataset in 3.31 seconds[0m
+[32m2025-01-14 13:02:48.105[0m | [1mINFO    [0m | [36m__main__[0m:[36mevaluate_model[0m:[36m121[0m - [1mEval set prepared in 3.31 seconds[0m
+[32m2025-01-14 13:03:20.622[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m508[0m - [1mEval loss at step 8000: 3.4391367435455322,tokens_seen: 800038852[0m
+
+loss at 32004 0.84765625
+Update steps:  90%|█████████████████████▌  | 9000/10000 [56:17<05:49,  2.86it/s][32m2025-01-14 13:09:01.618[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m496[0m - [1mPerforming evaluation at step 9000[0m
+
+loss at 32404 0.875
+
+loss at 32804 0.875
+
+loss at 33204 0.8671875
+
+loss at 33604 0.86328125
+lr 0.0001604457428872311
+lr 0.0001604457428872311
+Mask overlap ratio: 1.00
+Mask Update
+
+loss at 34004 0.84375
+
+loss at 34404 0.87890625
+
+loss at 34804 0.86328125
+
+loss at 35204 0.82421875
+
+loss at 35604 0.875
+lr 0.00012724587248340096
+lr 0.00012724587248340096
+Mask overlap ratio: 1.00
+Mask Update
+Resolving data files: 100%|███████████████████████████████████████████████████████████████████| 1024/1024 [00:00<00:00, 436613.53it/s]
+Resolving data files: 100%|███████████████████████████████████████████████████████████████████| 1024/1024 [00:00<00:00, 600191.07it/s]
+[32m2025-01-14 13:09:05.077[0m | [1mINFO    [0m | [36m__main__[0m:[36mevaluate_model[0m:[36m105[0m - [1mLoaded validation dataset in 3.46 seconds[0m
+[32m2025-01-14 13:09:05.078[0m | [1mINFO    [0m | [36m__main__[0m:[36mevaluate_model[0m:[36m121[0m - [1mEval set prepared in 3.46 seconds[0m
+[32m2025-01-14 13:09:37.166[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m508[0m - [1mEval loss at step 9000: 3.4260833263397217,tokens_seen: 899981426[0m
+
+loss at 36004 0.8359375
+Update steps: 100%|█████████████████████| 10000/10000 [1:02:33<00:00,  2.87it/s][32m2025-01-14 13:15:18.804[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m496[0m - [1mPerforming evaluation at step 10000[0m
+
+loss at 36404 0.87109375
+
+loss at 36804 0.87109375
+
+loss at 37204 0.84375
+
+loss at 37604 0.84375
+lr 0.00010689117232025215
+lr 0.00010689117232025215
+Mask overlap ratio: 1.00
+Mask Update
+
+loss at 38004 0.85546875
+
+loss at 38404 0.859375
+
+loss at 38804 0.82421875
+
+loss at 39204 0.85546875
+
+loss at 39604 0.86328125
+lr 0.00010000010966226667
+lr 0.00010000010966226667
+Mask overlap ratio: 1.00
+Mask Update
+Resolving data files: 100%|███████████████████████████████████████████████████████████████████| 1024/1024 [00:00<00:00, 492485.64it/s]
+Resolving data files: 100%|████████████████████████████████████████████████████████████████████| 1024/1024 [00:00<00:00, 32516.94it/s]
+[32m2025-01-14 13:15:22.694[0m | [1mINFO    [0m | [36m__main__[0m:[36mevaluate_model[0m:[36m105[0m - [1mLoaded validation dataset in 3.89 seconds[0m
+[32m2025-01-14 13:15:22.695[0m | [1mINFO    [0m | [36m__main__[0m:[36mevaluate_model[0m:[36m121[0m - [1mEval set prepared in 3.89 seconds[0m
+[32m2025-01-14 13:15:55.262[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m508[0m - [1mEval loss at step 10000: 3.420121669769287,tokens_seen: 999938455[0m
+
+loss at 40004 0.86328125
+Update steps: 10001it [1:03:11, 11.48s/it]                                      [32m2025-01-14 13:15:55.599[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m427[0m - [1mReached max number of update steps (f10000). Stopping training.[0m
+Rank 0 stopping training.
+[32m2025-01-14 13:15:55.953[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m535[0m - [1mTraining finished[0m
+Update steps: 10001it [1:03:11,  2.64it/s]
+[32m2025-01-14 13:15:55.954[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m540[0m - [1mSaving model and optimizer to /scratch-shared/HTJ2/checkpoints/new0_9392965/model_10001, update step 10001[0m
+[32m2025-01-14 13:15:56.414[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m567[0m - [1mRunning final evaluation[0m
+Resolving data files: 100%|██████████████████████████████████████████████████████████████████████| 1024/1024 [00:01<00:00, 575.97it/s]
+Resolving data files: 100%|████████████████████████████████████████████████████████████████████| 1024/1024 [00:00<00:00, 29583.54it/s]
+[32m2025-01-14 13:16:01.943[0m | [1mINFO    [0m | [36m__main__[0m:[36mevaluate_model[0m:[36m105[0m - [1mLoaded validation dataset in 5.37 seconds[0m
+[32m2025-01-14 13:16:01.944[0m | [1mINFO    [0m | [36m__main__[0m:[36mevaluate_model[0m:[36m121[0m - [1mEval set prepared in 5.37 seconds[0m
+[32m2025-01-14 13:16:34.713[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m585[0m - [1mFinal eval loss: 3.420121669769287[0m
+[32m2025-01-14 13:16:34.714[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m587[0m - [1mScript finished successfully[0m
+Rank 0 finished successfully
+perplexity 30.57313462099991

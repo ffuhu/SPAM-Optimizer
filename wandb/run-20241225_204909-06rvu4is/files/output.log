@@ -1,0 +1,709 @@
+2024-12-25 20:49:10.151 | INFO     | __main__:main:217 - Using dist with rank 0 (only rank 0 will log)
+2024-12-25 20:49:10.152 | INFO     | __main__:main:218 - ****************************************
+2024-12-25 20:49:10.152 | INFO     | __main__:main:219 - Starting training with the arguments
+2024-12-25 20:49:10.152 | INFO     | __main__:main:221 - model_config                   configs/llama_60m.json
+model_config                   configs/llama_60m.json
+2024-12-25 20:49:10.152 | INFO     | __main__:main:221 - use_hf_model                   False
+use_hf_model                   False
+2024-12-25 20:49:10.152 | INFO     | __main__:main:221 - continue_from                  None
+continue_from                  None
+2024-12-25 20:49:10.152 | INFO     | __main__:main:221 - batch_size                     128
+batch_size                     128
+2024-12-25 20:49:10.152 | INFO     | __main__:main:221 - gradient_accumulation          4
+gradient_accumulation          4
+2024-12-25 20:49:10.153 | INFO     | __main__:main:221 - total_batch_size               512
+total_batch_size               512
+2024-12-25 20:49:10.153 | INFO     | __main__:main:221 - max_length                     256
+max_length                     256
+2024-12-25 20:49:10.153 | INFO     | __main__:main:221 - optimizer                      SPAM
+optimizer                      SPAM
+2024-12-25 20:49:10.153 | INFO     | __main__:main:221 - lr                             0.004
+lr                             0.004
+2024-12-25 20:49:10.153 | INFO     | __main__:main:221 - scheduler                      cosine
+scheduler                      cosine
+2024-12-25 20:49:10.153 | INFO     | __main__:main:221 - min_lr_ratio                   0.1
+min_lr_ratio                   0.1
+2024-12-25 20:49:10.153 | INFO     | __main__:main:221 - activation_checkpointing       False
+activation_checkpointing       False
+2024-12-25 20:49:10.153 | INFO     | __main__:main:221 - weight_decay                   0.0
+weight_decay                   0.0
+2024-12-25 20:49:10.153 | INFO     | __main__:main:221 - warmup_steps                   1000
+warmup_steps                   1000
+2024-12-25 20:49:10.153 | INFO     | __main__:main:221 - eval_every                     1000
+eval_every                     1000
+2024-12-25 20:49:10.154 | INFO     | __main__:main:221 - num_training_steps             20000
+num_training_steps             20000
+2024-12-25 20:49:10.154 | INFO     | __main__:main:221 - max_train_tokens               None
+max_train_tokens               None
+2024-12-25 20:49:10.154 | INFO     | __main__:main:221 - save_every                     2000
+save_every                     2000
+2024-12-25 20:49:10.154 | INFO     | __main__:main:221 - save_dir                       /scratch-shared/HTJ2/checkpoints/new0_9152306
+save_dir                       /scratch-shared/HTJ2/checkpoints/new0_9152306
+2024-12-25 20:49:10.154 | INFO     | __main__:main:221 - tags                           None
+tags                           None
+2024-12-25 20:49:10.155 | INFO     | __main__:main:221 - dtype                          bfloat16
+dtype                          bfloat16
+2024-12-25 20:49:10.155 | INFO     | __main__:main:221 - workers                        8
+workers                        8
+2024-12-25 20:49:10.155 | INFO     | __main__:main:221 - seed                           0
+seed                           0
+2024-12-25 20:49:10.155 | INFO     | __main__:main:221 - name                           test
+name                           test
+2024-12-25 20:49:10.155 | INFO     | __main__:main:221 - model_type                     llama
+model_type                     llama
+2024-12-25 20:49:10.155 | INFO     | __main__:main:221 - grad_clipping                  0.0
+grad_clipping                  0.0
+2024-12-25 20:49:10.155 | INFO     | __main__:main:221 - beta1                          0.0
+beta1                          0.0
+2024-12-25 20:49:10.155 | INFO     | __main__:main:221 - rank                           0.3225388601036269
+rank                           0.3225388601036269
+2024-12-25 20:49:10.155 | INFO     | __main__:main:221 - update_proj_gap                500
+update_proj_gap                500
+2024-12-25 20:49:10.156 | INFO     | __main__:main:221 - galore_scale                   1.0
+galore_scale                   1.0
+2024-12-25 20:49:10.156 | INFO     | __main__:main:221 - updating_mask_method           interaction
+updating_mask_method           interaction
+2024-12-25 20:49:10.156 | INFO     | __main__:main:221 - init_mask                      random
+init_mask                      random
+2024-12-25 20:49:10.156 | INFO     | __main__:main:221 - single_gpu                     False
+single_gpu                     False
+2024-12-25 20:49:10.156 | INFO     | __main__:main:221 - mask_grad                      False
+mask_grad                      False
+2024-12-25 20:49:10.156 | INFO     | __main__:main:221 - spike_clip                     True
+spike_clip                     True
+2024-12-25 20:49:10.156 | INFO     | __main__:main:221 - sampling                       False
+sampling                       False
+2024-12-25 20:49:10.156 | INFO     | __main__:main:221 - load_local                     False
+load_local                     False
+2024-12-25 20:49:10.156 | INFO     | __main__:main:221 - m_replace                      False
+m_replace                      False
+2024-12-25 20:49:10.156 | INFO     | __main__:main:221 - warmup_epoch                   150
+warmup_epoch                   150
+2024-12-25 20:49:10.156 | INFO     | __main__:main:221 - threshold                      5000.0
+threshold                      5000.0
+2024-12-25 20:49:10.156 | INFO     | __main__:main:221 - grad_accu_steps                20.0
+grad_accu_steps                20.0
+2024-12-25 20:49:10.157 | INFO     | __main__:main:223 - ****************************************
+2024-12-25 20:49:21.150 | INFO     | __main__:main:236 - Shuffling data with seed 42
+/home/huangti/miniconda3/envs/spam/lib/python3.11/site-packages/huggingface_hub/file_download.py:797: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+  warnings.warn(
+wandb: WARNING Saving files without folders. If you want to preserve subdirectories pass base_path to wandb.save, i.e. wandb.save("/mnt/folder/file.h5", base_path="/mnt")
+Update steps:   0%|                                   | 0/20000 [00:00<?, ?it/s]2024-12-25 20:49:23.081 | INFO     | __main__:main:356 -
+LlamaForCausalLM(
+  (model): LlamaModel(
+    (embed_tokens): Embedding(32000, 512, padding_idx=31999)
+    (layers): ModuleList(
+      (0-7): 8 x LlamaDecoderLayer(
+        (self_attn): LlamaAttention(
+          (q_proj): Linear(in_features=512, out_features=512, bias=False)
+          (k_proj): Linear(in_features=512, out_features=512, bias=False)
+          (v_proj): Linear(in_features=512, out_features=512, bias=False)
+          (o_proj): Linear(in_features=512, out_features=512, bias=False)
+          (rotary_emb): LlamaRotaryEmbedding()
+        )
+        (mlp): LlamaMLP(
+          (gate_proj): Linear(in_features=512, out_features=1376, bias=False)
+          (down_proj): Linear(in_features=1376, out_features=512, bias=False)
+          (up_proj): Linear(in_features=512, out_features=1376, bias=False)
+          (act_fn): SiLUActivation()
+        )
+        (input_layernorm): LlamaRMSNorm()
+        (post_attention_layernorm): LlamaRMSNorm()
+      )
+    )
+    (norm): LlamaRMSNorm()
+  )
+  (lm_head): Linear(in_features=512, out_features=32000, bias=False)
+)
+
+2024-12-25 20:49:23.082 | INFO     | __main__:main:357 - Total params: 58.07M
+2024-12-25 20:49:23.082 | INFO     | __main__:main:358 - Trainable params: 58.07M
+2024-12-25 20:49:23.082 | INFO     | __main__:main:361 - Saving model to /scratch-shared/HTJ2/checkpoints/new0_9152306 every 2000 update steps
+/gpfs/home2/huangti/SPAM_v2/galore_torch/SPAM.py:68: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+density 0.3225375951262953
+/home/huangti/miniconda3/envs/spam/lib/python3.11/site-packages/torch/autograd/graph.py:825: UserWarning: cuDNN SDPA backward got grad_output.strides() != output.strides(), attempting to materialize a grad_output with matching strides... (Triggered internally at /opt/conda/conda-bld/pytorch_1728945379270/work/aten/src/ATen/native/cudnn/MHA.cpp:674.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+
+loss at 4 2.625
+Update steps:   2%|▌                      | 499/20000 [02:57<1:50:38,  2.94it/s]
+
+loss at 404 1.796875
+
+loss at 804 1.5546875
+
+loss at 1204 1.375
+
+loss at 1604 1.265625
+lr 0.001992
+lr 0.001992
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+Mask overlap ratio: 1.00
+Mask Update
+  warnings.warn(
+/home/huangti/miniconda3/envs/spam/lib/python3.11/site-packages/torch/optim/lr_scheduler.py:240: UserWarning: The epoch parameter in `scheduler.step()` was not necessary and is being deprecated where possible. Please use `scheduler.step()` to step the scheduler. During the deprecation, if epoch is different from None, the closed form is used instead of the new chainable form, where available. Please open an issue if you are unable to replicate your use case: https://github.com/pytorch/pytorch/issues/new/choose.
+  warnings.warn(EPOCH_DEPRECATION_WARNING, UserWarning)
+
+loss at 2004 1.203125
+Update steps:   5%|█▏                     | 999/20000 [05:47<1:47:44,  2.94it/s]
+
+loss at 2404 1.3515625
+
+loss at 2804 1.4765625
+
+loss at 3204 1.375
+
+loss at 3604 1.3125
+lr 0.003992
+lr 0.003992
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+Mask overlap ratio: 3.10
+Mask Update
+2024-12-25 20:55:20.150 | INFO     | __main__:evaluate_model:113 - Loaded validation dataset in 8.76 seconds
+2024-12-25 20:55:20.152 | INFO     | __main__:evaluate_model:129 - Eval set prepared in 8.76 seconds
+2024-12-25 20:55:55.027 | INFO     | __main__:main:576 - Eval loss at step 1000: 5.021197319030762,tokens_seen: 99979486
+
+loss at 4004 1.25
+Update steps:   7%|█▋                    | 1499/20000 [09:21<1:44:46,  2.94it/s]
+
+loss at 4404 1.234375
+
+loss at 4804 1.2109375
+
+loss at 5204 1.25
+
+loss at 5604 1.2421875
+lr 0.0039939011446085354
+lr 0.0039939011446085354
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+Mask overlap ratio: 3.10
+Mask Update
+
+loss at 6004 1.234375
+
+loss at 6404 1.265625
+
+loss at 6804 1.4609375
+
+loss at 7204 1.390625
+
+loss at 7604 1.4765625
+lr 0.00397554822383021
+lr 0.00397554822383021
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+Mask overlap ratio: 3.10
+Mask Update
+2024-12-25 21:01:42.645 | INFO     | __main__:evaluate_model:113 - Loaded validation dataset in 6.54 seconds
+2024-12-25 21:01:42.647 | INFO     | __main__:evaluate_model:129 - Eval set prepared in 6.54 seconds
+2024-12-25 21:02:14.809 | INFO     | __main__:main:576 - Eval loss at step 2000: 6.181187629699707,tokens_seen: 199880081
+
+loss at 8004 1.5546875
+Update steps:  12%|██▋                   | 2499/20000 [15:47<1:39:35,  2.93it/s]
+
+loss at 8404 1.546875
+
+loss at 8804 1.5859375
+
+loss at 9204 1.484375
+
+loss at 9604 1.4921875
+lr 0.003945066508300911
+lr 0.003945066508300911
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+Mask overlap ratio: 3.10
+Mask Update
+
+loss at 10004 1.4609375
+
+loss at 10404 1.4921875
+
+loss at 10804 1.5234375
+
+loss at 11204 1.453125
+
+loss at 11604 1.46875
+lr 0.0039026642190457565
+lr 0.0039026642190457565
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+Mask overlap ratio: 3.10
+Mask Update
+2024-12-25 21:08:07.204 | INFO     | __main__:evaluate_model:113 - Loaded validation dataset in 5.01 seconds
+2024-12-25 21:08:07.205 | INFO     | __main__:evaluate_model:129 - Eval set prepared in 5.01 seconds
+2024-12-25 21:08:39.171 | INFO     | __main__:main:576 - Eval loss at step 3000: 5.753896713256836,tokens_seen: 299903185
+
+loss at 12004 1.421875
+Update steps:  17%|███▊                  | 3499/20000 [22:06<1:33:54,  2.93it/s]
+
+loss at 12404 1.4609375
+
+loss at 12804 1.4921875
+
+loss at 13204 1.484375
+
+loss at 13604 1.5078125
+lr 0.0038486310066957134
+lr 0.0038486310066957134
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+Mask overlap ratio: 3.10
+Mask Update
+
+loss at 14004 1.4375
+
+loss at 14404 1.4453125
+
+loss at 14804 1.5390625
+
+loss at 15204 1.7265625
+
+loss at 15604 1.6953125
+lr 0.003783335972880091
+lr 0.003783335972880091
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+density tensor(1., device='cuda:0')
+Mask overlap ratio: 3.10
+Mask Update
+2024-12-25 21:14:26.222 | INFO     | __main__:evaluate_model:113 - Loaded validation dataset in 4.21 seconds
+2024-12-25 21:14:26.224 | INFO     | __main__:evaluate_model:129 - Eval set prepared in 4.21 seconds
+2024-12-25 21:14:58.016 | INFO     | __main__:main:576 - Eval loss at step 4000: 7.068812370300293,tokens_seen: 399934286
+
+loss at 16004 1.78125
+Update steps:  20%|████▌                 | 4098/20000 [26:08<1:30:54,  2.92it/s]
