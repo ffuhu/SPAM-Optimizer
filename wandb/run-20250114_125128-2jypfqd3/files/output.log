@@ -246,7 +246,7 @@ Mask Update
 2025-01-14 13:15:34.043 | INFO     | __main__:main:508 - Eval loss at step 4000: 3.505752444267273,tokens_seen: 399842458
 
 loss at 8002 1.7265625
-Update steps:  25%|█████▍                | 4982/20000 [29:16<1:22:36,  3.03it/s]
+Update steps:  25%|█████▌                | 5000/20000 [29:22<1:25:31,  2.92it/s]2025-01-14 13:21:03.743 | INFO     | __main__:main:496 - Performing evaluation at step 5000
 
 loss at 8202 1.7734375
 
@@ -269,3 +269,33 @@ loss at 9402 1.7578125
 loss at 9602 1.75
 
 loss at 9802 1.734375
+lr 0.0007241636897646183
+lr 0.0007241636897646183
+Mask overlap ratio: 1.00
+Mask Update
+2025-01-14 13:21:07.461 | INFO     | __main__:evaluate_model:105 - Loaded validation dataset in 3.72 seconds
+2025-01-14 13:21:07.463 | INFO     | __main__:evaluate_model:121 - Eval set prepared in 3.72 seconds
+2025-01-14 13:21:29.539 | INFO     | __main__:main:508 - Eval loss at step 5000: 3.4429025650024414,tokens_seen: 499891938
+
+loss at 10002 1.6796875
+Update steps:  29%|██████▍               | 5802/20000 [34:12<1:17:02,  3.07it/s]
+
+loss at 10202 1.765625
+
+loss at 10402 1.734375
+
+loss at 10602 1.703125
+
+loss at 10802 1.734375
+lr 0.0007049412236123251
+lr 0.0007049412236123251
+Mask overlap ratio: 1.00
+Mask Update
+
+loss at 11002 1.6796875
+
+loss at 11202 1.7421875
+
+loss at 11402 1.7578125
+
+loss at 11602 1.7421875
