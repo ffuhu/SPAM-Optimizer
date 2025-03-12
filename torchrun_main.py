@@ -86,7 +86,7 @@ def parse_args(args):
     parser.add_argument("--grad_accu_steps",type=float,default=20)
     parser.add_argument("--density", type=float, default=1.0)
     parser.add_argument("--update_gap", type=int, default=500)
-    
+    parser.add_argument("--DeltaT", type=int, default=500)
     args = parser.parse_args(args)
 
     args = args_utils.check_args_torchrun_main(args)
@@ -338,7 +338,7 @@ def main(args):
 
         # then call galore_adamw
         param_groups = [{'params': regular_params}, 
-                        {'params': galore_params, 'density': args.density, 'update_proj_gap': args.update_gap}]
+                        {'params': galore_params, 'density': args.density}]
                
 
     # print params and trainable params
@@ -354,7 +354,7 @@ def main(args):
         optimizer = torch.optim.Adam(trainable_params, lr=args.lr, weight_decay=args.weight_decay)
     elif args.optimizer.lower() == "spam":
         # redefine way to call galore_adamw
-        optimizer = SPAM(param_groups, lr=args.lr,weight_decay=args.weight_decay,warmup_epoch=args.warmup_epoch,threshold=args.threshold)
+        optimizer = SPAM(param_groups, lr=args.lr,weight_decay=args.weight_decay,warmup_steps=args.warmup_steps,DeltaT= args.DeltaT,threshold=args.threshold)
     # implement sgd
     elif args.optimizer.lower() == "sgd":
         optimizer = torch.optim.SGD(trainable_params, lr=args.lr, weight_decay=args.weight_decay, momentum=args.beta1)

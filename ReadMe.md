@@ -34,8 +34,8 @@ pip install tqdm wandb<br>
 from galore_torch import SPAM
 # define param groups as spam_params and non_spam_params
 param_groups = [{'params': non_spam_params}, 
-                {'params': spam_params, 'density': 1.0, 'update_proj_gap': 500}]
-optimizer = SPAM(param_groups, lr=0.001,warmup_epoch=150,threshold=5000)
+                {'params': spam_params, 'density': 1.0}]
+optimizer = SPAM(param_groups, lr=0.001,warmup_steps=150,threshold=5000,DeltaT=500)
 ```
 
 ### example: Training LLaMA-130M 
@@ -44,7 +44,7 @@ torchrun --standalone --nproc_per_node 2 torchrun_main.py \
     --model_config configs/llama_130m.json \
     --lr 8e-4 \
     --density 1.0 \
-    --update_gap 500 \
+    --DeltaT 500 \
     --batch_size 128  \
     --total_batch_size 512 \
     --num_training_steps 20000 \
@@ -64,7 +64,7 @@ torchrun --standalone --nproc_per_node 2 torchrun_main.py \
     --model_config configs/llama_350m.json \
     --lr 4e-4 \
     --density 1.0 \
-    --update_gap 500 \
+    --DeltaT 500 \
     --batch_size 128  \
     --total_batch_size 512 \
     --num_training_steps 60000 \

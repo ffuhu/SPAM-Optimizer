@@ -81,7 +81,7 @@ class AdamW(Optimizer):
             Defaults to True.
         no_deprecation_warning (bool, optional): Disable deprecation warning.
             Defaults to False.
-        warmup_epoch (int, optional): Number of epochs to warm up. Defaults to 50.
+        warmup_steps (int, optional): Number of epochs to warm up. Defaults to 50.
         threshold (int, optional): Threshold for gradient masking. Defaults to 5000.
         grad_accu_steps (int, optional): Gradient accumulation steps before
             threshold-based masking applies. Defaults to 20.
@@ -96,8 +96,9 @@ class AdamW(Optimizer):
         weight_decay: float = 0.0,
         correct_bias: bool = True,
         no_deprecation_warning: bool = False,
-        warmup_epoch: int = 50,
+        warmup_steps: int = 150,
         threshold: int = 5000,
+        DeltaT=500,
         grad_accu_steps: int = 20,
     ):
         if not no_deprecation_warning:
@@ -131,10 +132,10 @@ class AdamW(Optimizer):
         self.check_sparsity()
 
         self.state["total_step"] = 0
-        self.state["current_step"] = warmup_epoch + 1
-        self.update_proj_gap = 1e9  # Large initial value; updated later
-        self.warmup_epoch = warmup_epoch
-        self.warmup = CosineDecay(0.99, warmup_epoch)  # Warmup after momentum reset
+        self.state["current_step"] = warmup_steps + 1
+        self.DeltaT = DeltaT  
+        self.warmup_steps = warmup_steps
+        self.warmup = CosineDecay(0.99, warmup_steps)  # Warmup after momentum reset
         self.thres = threshold
         self.grad_accu_steps = grad_accu_steps
 
@@ -193,9 +194,9 @@ class AdamW(Optimizer):
         scale_factor = 1 - self.warmup.get_dr(self.state["current_step"])
 
         for group in self.param_groups:
-            if "density" in group:
-                # If the group has 'density', update `update_proj_gap`
-                self.update_proj_gap = group["update_proj_gap"]
+            # if "density" in group:
+            #     # If the group has 'density', update `update_proj_gap`
+            #     self.update_proj_gap = group["update_proj_gap"]
 
             for p in group["params"]:
                 if p.grad is None:
@@ -223,7 +224,7 @@ class AdamW(Optimizer):
                     state["exp_avg_sq"] = torch.zeros_like(grad)
 
                 # Reset momentum when total_step hits update_proj_gap
-                if (self.state["total_step"] + 1) % self.update_proj_gap == 0:
+                if (self.state["total_step"] + 1) % self.DeltaT == 0:
                     state["exp_avg"] = torch.zeros_like(grad)
                     state["exp_avg_sq"] = torch.zeros_like(grad)
 
@@ -237,9 +238,9 @@ class AdamW(Optimizer):
                     if current_step >= self.grad_accu_steps:
                         exp_avg_sq1 = exp_avg_sq
                         mask = (grad**2) > (self.thres * exp_avg_sq1)
-                        if self.update_proj_gap != 0:
+                        if self.DeltaT != 0:
                             # Only apply after enough accumulation steps
-                            if current_step % self.update_proj_gap >= self.grad_accu_steps:
+                            if current_step % self.DeltaT >= self.grad_accu_steps:
                                 grad[mask]=grad[mask].sign()*torch.sqrt(exp_avg_sq1[mask]*self.thres)
                         else:
                             grad[mask]=grad[mask].sign()*torch.sqrt(exp_avg_sq1[mask]*self.thres)
@@ -286,12 +287,12 @@ class AdamW(Optimizer):
 
         # Mask update if needed
         if (self.state["total_step"] != 0) and (
-            (self.state["total_step"] + 1) % self.update_proj_gap == 0
+            (self.state["total_step"] + 1) % self.DeltaT == 0
         ):
             self.update_masks()
             print("Mask Update", flush=True)
             self.state["current_step"] = 0
-            self.warmup = CosineDecay(0.99, self.warmup_epoch)
+            self.warmup = CosineDecay(0.99, self.warmup_steps)
 
         return loss
 
