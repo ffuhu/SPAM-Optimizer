@@ -29,25 +29,28 @@ export OMP_NUM_THREADS=8
 
 for prj in 150
 do
-torchrun --standalone --nnodes 1 --nproc_per_node 1 torchrun_main.py \
-    --model_config configs/llama_130m.json \
-    --lr 8e-4 \
-    --density 1.0 \
-    --update_gap 500 \
-    --batch_size 32  \
-    --total_batch_size 512 \
-    --num_training_steps 20000 \
-    --warmup_steps 1000 \
-    --weight_decay 0 \
-    --dtype bfloat16 \
-    --eval_every 1000 \
-    --threshold 5000 \
-    --save_dir $save_dir \
-    --optimizer Muon \
-    --warmup_epoch $prj \
-    --single_gpu
+  for opt in Muon Adam
+  do
+    echo ">>> OPTIMIZER: $opt"
+    torchrun --standalone --nnodes 1 --nproc_per_node 1 torchrun_main.py \
+        --model_config configs/llama_130m.json \
+        --lr 8e-4 \
+        --density 1.0 \
+        --update_gap 500 \
+        --batch_size 32  \
+        --total_batch_size 512 \
+        --num_training_steps 20000 \
+        --warmup_steps 1000 \
+        --weight_decay 0 \
+        --dtype bfloat16 \
+        --eval_every 1000 \
+        --threshold 5000 \
+        --save_dir $save_dir \
+        --optimizer $opt \
+        --warmup_epoch $prj \
+        --single_gpu
+  done
 done
-
 # done
 # Calculate the duration on execution
 END_TIME=`date`; echo ">>> END: $END_TIME"
