@@ -220,3 +220,25 @@ def max_train_tokens_to_number(max_train_tokens):
         return int(float(max_train_tokens.rstrip("B")) * 1_000_000_000)
     else:
         return int(max_train_tokens)
+
+
+# compute gradient norm of the whole model
+def compute_grad_norm(model):
+
+    # def compute_grad_norm(model):
+    #     return torch.nn.utils.get_total_norm(model.parameters(), norm_type=2.0)
+    #
+    # local_norm = compute_grad_norm(model)
+    # if torch.distributed.is_initialized():
+    #     local_norm_tensor = torch.tensor([local_norm]).to(model.device)
+    #     torch.distributed.all_reduce(local_norm_tensor, op=torch.distributed.ReduceOp.MAX)
+    #     return local_norm_tensor.item()
+    # Calculate global gradient norm
+    grads = []
+    for p in model.parameters():
+        if p.grad is not None:
+            grads.append(p.grad.detach().flatten())
+
+    local_norm = torch.norm(torch.cat(grads), 2)
+
+    return local_norm

@@ -1,4 +1,20 @@
 import os
+
+# to allow torchrun to run properly
+os.environ['MASTER_ADDR'] = 'localhost'
+os.environ['MASTER_PORT'] = '12355'
+os.environ['RANK'] = '0'
+os.environ["LOCAL_RANK"] = '0'
+os.environ["WORLD_SIZE"] = '1'
+
+# # to ensure the socket is available for training
+# import socket
+# def is_port_available(port):
+#     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+#         return s.connect_ex(('localhost', port)) != 0
+#
+# assert is_port_available(int(os.environ['MASTER_PORT'])), "Port in use!"
+
 import time
 import json
 import random
@@ -10,6 +26,25 @@ import torch.nn as nn
 import torch.utils.data
 import torch.distributed as dist
 
+
+# # to catch Ctrl+C and clean the resources gracefully
+# import sys
+# import signal
+# def graceful_exit(signum, frame):
+#     print(f"Received signal {signum}, exiting gracefully.")
+#     if dist.is_initialized():
+#         dist.destroy_process_group()
+#         print("dist properly finished")
+#     sys.exit(0)
+#
+# from torch.distributed.elastic.multiprocessing.errors import record
+# from torch.distributed.elastic.agent.server import ElasticAgent
+# from torch.distributed.elastic.agent.server import WorkerSpec
+# from torch.distributed.elastic.agent.server import SimpleElasticAgent
+# from torch.distributed.elastic.rendezvous import RendezvousHandler
+
+
+
 import transformers
 from transformers import AutoConfig, AutoTokenizer, AutoModelForCausalLM
 from transformers import LlamaForCausalLM as HF_LlamaForCausalLM
@@ -17,7 +52,6 @@ from datetime import timedelta
 import datasets
 import datasets.distributed
 import wandb
-import torch.distributed as dist
 from tqdm import tqdm
 from loguru import logger
 
@@ -27,7 +61,7 @@ from peft_pretraining.modeling_llama import LlamaForCausalLM
 from peft_pretraining.modeling_pythia import GPTNeoXForCausalLM
 from datasets import load_from_disk,Dataset
 import bitsandbytes as bnb
-from galore_torch import SPAM
+from galore_torch import SPAM, Muon
 transformers.logging.set_verbosity_error()
 import psutil
 from datasets import config
@@ -173,6 +207,14 @@ def remove_grad(params):
         if p.mask_grad!=None:
             p.mask_grad.zero_()
 
+# @record
+# def main(args):
+#     signal.signal(signal.SIGTERM, graceful_exit)
+#     signal.signal(signal.SIGINT, graceful_exit)
+#
+#     run_exp(args)
+
+
 def main(args):
     torch.manual_seed(args.seed)
     np.random.seed(args.seed)
@@ -185,7 +227,8 @@ def main(args):
     world_size = int(os.environ["WORLD_SIZE"])
     torch.cuda.set_device(local_rank)
     logger.info(f"Global rank {global_rank}, local rank {local_rank}, device: {torch.cuda.current_device()}")
-    dist.init_process_group(backend="nccl", rank=global_rank,timeout=timedelta(seconds=1800),world_size=world_size)
+    # dist.init_process_group(backend="nccl", rank=global_rank,timeout=timedelta(seconds=1800),world_size=world_size)
+    dist.init_process_group(backend="nccl", rank=global_rank, world_size=world_size)
 
     logger.info("Process group initialized")
     device = f"cuda:{local_rank}"
@@ -204,7 +247,7 @@ def main(args):
             
     # initialize wandb without config (it is passed later)
     if global_rank == 0:
-        wandb.init(project="galore-c4")
+        wandb.init(project="opt-comp-c4")
         
     logger.info(f"Using dist with rank {global_rank} (only rank 0 will log)")
     logger.info("*" * 40)
@@ -219,7 +262,8 @@ def main(args):
         # data = Dataset.from_dict(data.to_dict(), keep_in_memory=True)
         
     else:
-        data = datasets.load_dataset("allenai/c4", "en", split="train", streaming=True,trust_remote_code=True)
+        data = datasets.load_dataset("allenai/c4", "en", split="train", streaming=True,
+                                     trust_remote_code=True)
         seed_for_shuffle = 42 
         data: datasets.Dataset = data.shuffle(seed=seed_for_shuffle)
 
@@ -332,6 +376,7 @@ def main(args):
             
             # print('enable GaLore for weights in module: ', module_name)
             galore_params.append(module.weight)
+
         id_galore_params = [id(p) for p in galore_params]
         # make parameters without "rank" to another group
         regular_params = [p for p in model.parameters() if id(p) not in id_galore_params]
@@ -339,7 +384,7 @@ def main(args):
         # then call galore_adamw
         param_groups = [{'params': regular_params}, 
                         {'params': galore_params, 'density': args.density}]
-               
+
 
     # print params and trainable params
     logger.info(f"\n{model}\n")
@@ -373,18 +418,57 @@ def main(args):
             scale_parameter=False,
             warmup_init=False,
         )
+    elif args.optimizer.lower() == "muon":
+        # collect the parameters to optimize
+        hidden_matrix_params = [p for n, p in model.named_parameters()
+                                if p.ndim >= 2 and "embed" not in n and "lm_head" not in n]
+        embed_params = [p for n, p in model.named_parameters() if "embed" in n]
+        scalar_params = [p for p in model.parameters() if p.ndim < 2]
+        head_params = [model.lm_head.weight]
+
+        # log parameters being optimized by Muon
+        muon_params_table = wandb.Table(columns=["param_name", "param_shape"])
+        for param_name, param_weight in model.named_parameters():
+            if param_weight.ndim >= 2 and "embed" not in param_name:
+                muon_params_table.add_data(param_name, str(param_weight.shape))
+        wandb.log({"muon_params": muon_params_table})
+
+        # init the optimizer(s)
+        adam_params = [dict(params=head_params, lr=0.008), dict(params=embed_params, lr=0.6),
+                       dict(params=scalar_params, lr=0.04)]
+        # small adam epsilon by @YouJiacheng. this is an alternate method of fixing the world_size dependence
+        # discovered by @fernbear.bsky.social https://x.com/hi_tysam/status/1879692937589875094
+        optimizer1 = torch.optim.Adam(adam_params, lr=args.lr, weight_decay=args.weight_decay,
+                                      betas=(0.8, 0.95), eps=1e-10, fused=True)
+        optimizer2 = Muon(hidden_matrix_params, lr=0.05, momentum=0.95, rank=local_rank, world_size=world_size)
+        optimizers = [optimizer1, optimizer2]
+        # for opt in optimizers:
+        #     for group in opt.param_groups:
+        #         group["initial_lr"] = args.lr
     # 8-bit Adam
     else:
         raise ValueError(f"Optimizer {args.optimizer} not supported")
 
     if not layer_wise_flag:
-        scheduler = training_utils.get_scheculer(
-            optimizer=optimizer,
-            scheduler_type=args.scheduler,
-            num_training_steps=args.num_training_steps,
-            warmup_steps=args.warmup_steps,
-            min_lr_ratio=args.min_lr_ratio,
-        )
+        if "muon" in args.optimizer.lower():
+            schedulers = []
+            for opt in optimizers:
+                scheduler = training_utils.get_scheculer(
+                    optimizer=opt,
+                    scheduler_type=args.scheduler,
+                    num_training_steps=args.num_training_steps,
+                    warmup_steps=args.warmup_steps,
+                    min_lr_ratio=args.min_lr_ratio,
+                )
+                schedulers.append(scheduler)
+        else:
+            scheduler = training_utils.get_scheculer(
+                optimizer=optimizer,
+                scheduler_type=args.scheduler,
+                num_training_steps=args.num_training_steps,
+                warmup_steps=args.warmup_steps,
+                min_lr_ratio=args.min_lr_ratio,
+            )
 
     if not args.single_gpu:
         model: LlamaForCausalLM = torch.nn.parallel.DistributedDataParallel(
@@ -395,6 +479,8 @@ def main(args):
         )
 
     if args.continue_from is not None:
+        #TODO: fix to work with MUON
+        assert "muon" not in args.optimizer, "resume training not implemented for muon opt"
         logger.info("*" * 40)
         logger.info(f"Loading optimier and scheduler from {args.continue_from}")
         optimizer.load_state_dict(optimizer_ch['optimizer'])
@@ -449,9 +535,20 @@ def main(args):
         if global_rank == 0: pbar.update(1)
         
         if not layer_wise_flag:
-            optimizer.step()
-            scheduler.step()
-            optimizer.zero_grad()
+
+            # log model gradient norm to wandb
+            if global_rank == 0:
+                wandb.log({"gradient_norm": training_utils.compute_grad_norm(model)})
+
+            if "muon" in args.optimizer.lower():
+                for opt, sch in zip(optimizers, schedulers):
+                    opt.step()
+                    sch.step()
+                    opt.zero_grad()
+            else:
+                optimizer.step()
+                scheduler.step()
+                optimizer.zero_grad()
 
         update_step += 1
         update_time = time.time() - update_time
@@ -463,15 +560,28 @@ def main(args):
             os.makedirs(args.save_dir, exist_ok=True)
             model.module.save_pretrained(current_model_directory, max_shard_size='100GB')
 
-            optimizer_checkpoint = {
-                "optimizer": optimizer.state_dict(),
-                "scheduler": scheduler.state_dict(),
-                "update_step": update_step,
-                "global_step": global_step,
-                "config": run_config,
-                "wandb": wandb.run.dir,
-                "dtype": args.dtype,
-            }
+            if "muon" in args.optimizer.lower():
+                optimizer_checkpoint = {
+                    opt.__class__: {
+                        "optimizer": opt.state_dict(),
+                        "scheduler": sch.state_dict(),
+                        "update_step": update_step,
+                        "global_step": global_step,
+                        "config": run_config,
+                        "wandb": wandb.run.dir,
+                        "dtype": args.dtype,
+                    } for opt, sch in zip(optimizers, schedulers)
+                }
+            else:
+                optimizer_checkpoint = {
+                    "optimizer": optimizer.state_dict(),
+                    "scheduler": scheduler.state_dict(),
+                    "update_step": update_step,
+                    "global_step": global_step,
+                    "config": run_config,
+                    "wandb": wandb.run.dir,
+                    "dtype": args.dtype,
+                }
             torch.save(optimizer_checkpoint, f"{current_model_directory}/optimizer.pt")
 
             training_state_checkpoint = {
@@ -507,24 +617,33 @@ def main(args):
                 )
             logger.info(f"Eval loss at step {update_step}: {total_loss},tokens_seen: {tokens_seen}")
 
-        if not layer_wise_flag:
-            lr = optimizer.param_groups[0]["lr"]
-        else:
-            lr = list(optimizer_dict.values())[0].param_groups[0]["lr"]
+
         tokens_in_update = tokens_seen - tokens_seen_before
         tokens_seen_before = tokens_seen
         batches_in_update = args.gradient_accumulation * world_size
-
-        if global_rank == 0:
-            wandb.log({
+        wandb_log = {
                 "loss": loss.item(),
-                "lr": lr,
                 "update_step": update_step,
                 "tokens_seen": tokens_seen,
                 "throughput_tokens": tokens_in_update / update_time,
                 "throughput_examples": args.total_batch_size / update_time,
                 "throughput_batches": batches_in_update / update_time,
-                },
+                }
+
+        if not layer_wise_flag:
+            if "muon" in args.optimizer.lower():
+                for opt in optimizers:
+                    for ipg, param_groups in enumerate(opt.param_groups):
+                        opt_name = opt.__class__.__name__
+                        wandb_log[f"lr_{opt_name}_params{ipg}"] = param_groups["lr"]
+            else:
+                 wandb_log['lr'] = optimizer.param_groups[0]["lr"]
+        else:
+            # TODO: fix this to work with MUON
+            assert "muon" not in args.optimizer, "resume training not implemented for muon opt"
+            lr = list(optimizer_dict.values())[0].param_groups[0]["lr"]
+        if global_rank == 0:
+            wandb.log(wandb_log,
                 step=global_step,
             )
         update_time = time.time()
@@ -542,15 +661,28 @@ def main(args):
         model.module.generation_config.do_sample = True
         model.module.save_pretrained(current_model_directory)
 
-        optimizer_checkpoint = {
-            "optimizer": optimizer.state_dict(),
-            "scheduler": scheduler.state_dict(),
-            "update_step": update_step,
-            "global_step": global_step,
-            "config": run_config,
-            "wandb": wandb.run.dir,
-            "dtype": args.dtype,
-        }
+        if "muon" in args.optimizer.lower():
+            optimizer_checkpoint = {
+                opt.__class__.__name__: {
+                    "optimizer": opt.state_dict(),
+                    "scheduler": sch.state_dict(),
+                    "update_step": update_step,
+                    "global_step": global_step,
+                    "config": run_config,
+                    "wandb": wandb.run.dir,
+                    "dtype": args.dtype,
+                } for opt, sch in zip(optimizers, schedulers)
+            }
+        else:
+            optimizer_checkpoint = {
+                "optimizer": optimizer.state_dict(),
+                "scheduler": scheduler.state_dict(),
+                "update_step": update_step,
+                "global_step": global_step,
+                "config": run_config,
+                "wandb": wandb.run.dir,
+                "dtype": args.dtype,
+            }
         torch.save(optimizer_checkpoint, f"{current_model_directory}/optimizer.pt")
 
         training_state_checkpoint = {
@@ -588,8 +720,25 @@ def main(args):
     print(f"Rank {global_rank} finished successfully")
     print("perplexity",perplexity)
 
+    # Ensure cleanup happens even if an exception occurs
+    if dist.is_initialized():
+        dist.destroy_process_group()
+        print("dist properly finished")
+
 
 if __name__ == "__main__":
+    # try:
+    #     print("Starting script")
+    #     args = parse_args(None)
+    #     main(args)
+    #
+    # except Exception as e:
+    #     print(f"An error occurred: {e}")
+    # finally:
+    #     # Ensure cleanup happens even if an exception occurs
+    #     if dist.is_initialized():
+    #         dist.destroy_process_group()
+    #     print("dist properly finished")
     print("Starting script")
     args = parse_args(None)
     main(args)
