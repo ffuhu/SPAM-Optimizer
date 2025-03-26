@@ -1,8 +1,0 @@
-{"time":"2024-12-29T00:10:37.313319754+01:00","level":"INFO","msg":"using version","core version":"0.18.5"}
-{"time":"2024-12-29T00:10:37.313400603+01:00","level":"INFO","msg":"created symlink","path":"/gpfs/home2/huangti/SPAM_v2/wandb/run-20241229_001037-qku4u4bb/logs/debug-core.log"}
-{"time":"2024-12-29T00:10:37.720505321+01:00","level":"INFO","msg":"created new stream","id":"qku4u4bb"}
-{"time":"2024-12-29T00:10:37.72058484+01:00","level":"INFO","msg":"stream: started","id":"qku4u4bb"}
-{"time":"2024-12-29T00:10:37.72060743+01:00","level":"INFO","msg":"sender: started","stream_id":"qku4u4bb"}
-{"time":"2024-12-29T00:10:37.72059503+01:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"qku4u4bb"}}
-{"time":"2024-12-29T00:10:37.72060889+01:00","level":"INFO","msg":"handler: started","stream_id":{"value":"qku4u4bb"}}
-{"time":"2024-12-29T00:10:37.937224068+01:00","level":"INFO","msg":"Starting system monitor"}

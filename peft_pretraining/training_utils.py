@@ -225,14 +225,6 @@ def max_train_tokens_to_number(max_train_tokens):
 # compute gradient norm of the whole model
 def compute_grad_norm(model):
 
-    # def compute_grad_norm(model):
-    #     return torch.nn.utils.get_total_norm(model.parameters(), norm_type=2.0)
-    #
-    # local_norm = compute_grad_norm(model)
-    # if torch.distributed.is_initialized():
-    #     local_norm_tensor = torch.tensor([local_norm]).to(model.device)
-    #     torch.distributed.all_reduce(local_norm_tensor, op=torch.distributed.ReduceOp.MAX)
-    #     return local_norm_tensor.item()
     # Calculate global gradient norm
     grads = []
     for p in model.parameters():
@@ -242,3 +234,32 @@ def compute_grad_norm(model):
     local_norm = torch.norm(torch.cat(grads), 2)
 
     return local_norm
+
+# compute gradient norm of the whole model
+def compute_grad_norm_by_param_name(model):
+
+    # Calculate global gradient norm
+    grads = []
+    grads_embed = []
+    grads_scalar = []
+    grads_head = []
+    grads_hidden_matrix = []
+    for n, p in model.named_parameters():
+        if p.grad is not None:
+            grads.append(p.grad.detach().flatten())
+            if "embed" in n:
+                grads_embed.append(grads[-1])
+            if p.ndim < 2:
+                grads_scalar.append(grads[-1])
+            if p.ndim >= 2 and "embed" not in n and "lm_head" not in n:
+                grads_hidden_matrix.append(grads[-1])
+            if "lm_head" in n:
+                grads_head.append(grads[-1])
+
+    local_norm = torch.norm(torch.cat(grads), 2)
+    local_embed = torch.norm(torch.cat(grads_embed), 2)
+    local_scalar = torch.norm(torch.cat(grads_scalar), 2)
+    local_head = torch.norm(torch.cat(grads_head), 2)
+    local_hidden_matrix = torch.norm(torch.cat(grads_hidden_matrix), 2)
+
+    return local_norm, (local_embed, local_scalar, local_head, local_hidden_matrix)

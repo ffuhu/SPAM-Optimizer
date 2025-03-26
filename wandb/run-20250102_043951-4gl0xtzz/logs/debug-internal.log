@@ -1,8 +1,0 @@
-{"time":"2025-01-02T04:39:59.882313515+01:00","level":"INFO","msg":"using version","core version":"0.18.5"}
-{"time":"2025-01-02T04:39:59.882432414+01:00","level":"INFO","msg":"created symlink","path":"/gpfs/home2/huangti/SPAM_v2/wandb/run-20250102_043951-4gl0xtzz/logs/debug-core.log"}
-{"time":"2025-01-02T04:40:00.09881785+01:00","level":"INFO","msg":"created new stream","id":"4gl0xtzz"}
-{"time":"2025-01-02T04:40:00.09889886+01:00","level":"INFO","msg":"stream: started","id":"4gl0xtzz"}
-{"time":"2025-01-02T04:40:00.100701377+01:00","level":"INFO","msg":"sender: started","stream_id":"4gl0xtzz"}
-{"time":"2025-01-02T04:40:00.098982409+01:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"4gl0xtzz"}}
-{"time":"2025-01-02T04:40:00.099034879+01:00","level":"INFO","msg":"handler: started","stream_id":{"value":"4gl0xtzz"}}
-{"time":"2025-01-02T04:40:00.381642954+01:00","level":"INFO","msg":"Starting system monitor"}
