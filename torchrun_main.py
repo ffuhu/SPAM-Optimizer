@@ -1,8 +1,10 @@
 import os
 
 # to allow torchrun to run properly
-os.environ['MASTER_ADDR'] = 'localhost'
-os.environ['MASTER_PORT'] = '12355'
+if 'MASTER_ADDR' not in os.environ:
+    os.environ['MASTER_ADDR'] = 'localhost'
+if 'MASTER_PORT' not in os.environ:
+    os.environ['MASTER_PORT'] = '12355'
 os.environ['RANK'] = '0'
 os.environ["LOCAL_RANK"] = '0'
 os.environ["WORLD_SIZE"] = '1'
@@ -260,7 +262,7 @@ def main(args):
 
     # initialize wandb without config (it is passed later)
     if global_rank == 0:
-        wandb.init(project="opt-comp-c4") #, name=args.project_name)
+        wandb.init(project="opt-comp-c4", name=args.project_name, tags=[args.optimizer])
 
     logger.info(f"Using dist with rank {global_rank} (only rank 0 will log)")
     logger.info("*" * 40)
@@ -322,31 +324,31 @@ def main(args):
     tokens_seen = 0
     tokens_seen_before = 0
 
-    if args.continue_from is not None:
-        logger.info("*" * 40)
-        logger.info(f"Loading model from {args.continue_from}")
-        checkpoint_path = os.path.join(args.continue_from, "pytorch_model.bin")
-        model.load_state_dict(torch.load(checkpoint_path, map_location="cpu"), strict=True)
-        logger.info(f"Model successfully loaded (strict=True policy)")
-        optimizer_ch = torch.load(f"{args.continue_from}/optimizer.pt")
-
-        if os.path.exists(os.path.join(args.continue_from, "training_state.json")):
-            logger.info(
-                f"Loading training state like global_step, update_step, and tokens_seen from {args.continue_from}")
-            with open(os.path.join(args.continue_from, "training_state.json")) as f:
-                _old_state = json.load(f)
-            global_step = _old_state["global_step"]
-            update_step = _old_state["update_step"]
-            tokens_seen = _old_state["tokens_seen"]
-            tokens_seen_before = _old_state["tokens_seen_before"]
-            logger.info(f"global_step       : {global_step}")
-            # logger.info(f"update_step       : {update_step}")
-            logger.info(f"tokens_seen       : {tokens_seen}")
-            logger.info(f"tokens_seen_before: {tokens_seen_before}")
-            logger.info(f"Will train for {args.num_training_steps - update_step} update steps")
-        else:
-            logger.warning(f"Did not find training state in {args.continue_from}, global step will start from zero")
-        logger.info("*" * 40)
+    # if args.continue_from is not None:
+    #     logger.info("*" * 40)
+    #     logger.info(f"Loading model from {args.continue_from}")
+    #     checkpoint_path = os.path.join(args.continue_from, "pytorch_model.bin")
+    #     model.load_state_dict(torch.load(checkpoint_path, map_location="cpu"), strict=True)
+    #     logger.info(f"Model successfully loaded (strict=True policy)")
+    #     optimizer_ch = torch.load(f"{args.continue_from}/optimizer.pt")
+    #
+    #     if os.path.exists(os.path.join(args.continue_from, "training_state.json")):
+    #         logger.info(
+    #             f"Loading training state like global_step, update_step, and tokens_seen from {args.continue_from}")
+    #         with open(os.path.join(args.continue_from, "training_state.json")) as f:
+    #             _old_state = json.load(f)
+    #         global_step = _old_state["global_step"]
+    #         update_step = _old_state["update_step"]
+    #         tokens_seen = _old_state["tokens_seen"]
+    #         tokens_seen_before = _old_state["tokens_seen_before"]
+    #         logger.info(f"global_step       : {global_step}")
+    #         # logger.info(f"update_step       : {update_step}")
+    #         logger.info(f"tokens_seen       : {tokens_seen}")
+    #         logger.info(f"tokens_seen_before: {tokens_seen_before}")
+    #         logger.info(f"Will train for {args.num_training_steps - update_step} update steps")
+    #     else:
+    #         logger.warning(f"Did not find training state in {args.continue_from}, global step will start from zero")
+    #     logger.info("*" * 40)
 
     if args.dtype in ["bf16", "bfloat16"]:
         model = model.to(device=device, dtype=torch.bfloat16)
@@ -436,28 +438,6 @@ def main(args):
         scalar_params = [p for n, p in model.named_parameters() if p.ndim < 2]
         head_params = [model.lm_head.weight]
 
-        # hidden_matrix_params_ = []
-        # hidden_matrix_params_names_ = []
-        # embed_params_ = []
-        # embed_params_names_ = []
-        # scalar_params_ = []
-        # scalar_params_names_ = []
-        # head_params_ = []
-        # head_params_names_ = []
-        # for n, p in model.named_parameters():
-        #     if p.ndim >= 2 and "embed" not in n and "lm_head" not in n:
-        #         hidden_matrix_params_.append(p)
-        #         hidden_matrix_params_names_.append(n)
-        #     if "embed" in n:
-        #         embed_params_.append(p)
-        #         embed_params_names_.append(n)
-        #     if "lm_head" in n:
-        #         head_params_.append(p)
-        #         head_params_names_.append(n)
-        #     if p.ndim < 2:
-        #         scalar_params_.append(p)
-        #         scalar_params_names_.append(n)
-
         # log parameters being optimized by Muon
         muon_params_table = wandb.Table(columns=["param_name", "param_shape"])
         for param_name, param_weight in model.named_parameters():
@@ -465,14 +445,6 @@ def main(args):
                 muon_params_table.add_data(param_name, str(param_weight.shape))
         wandb.log({"muon_params": muon_params_table})
 
-        # # init the optimizer(s)
-        # adam_params = [dict(params=head_params, lr=0.008), dict(params=embed_params, lr=0.6),
-        #                dict(params=scalar_params, lr=0.04)]
-        # # small adam epsilon by @YouJiacheng. this is an alternate method of fixing the world_size dependence
-        # # discovered by @fernbear.bsky.social https://x.com/hi_tysam/status/1879692937589875094
-        # optimizer1 = torch.optim.Adam(adam_params, lr=args.lr, weight_decay=args.weight_decay,
-        #                               betas=(0.8, 0.95), eps=1e-10, fused=True)
-        # optimizer2 = Muon(hidden_matrix_params, lr=0.05, momentum=0.95, rank=local_rank, world_size=world_size)
         # init the optimizer(s)
         adam_params = [dict(params=head_params, lr=args.lr_adam_head), dict(params=embed_params, lr=args.lr_adam_embed),
                        dict(params=scalar_params, lr=args.lr_adam_scalar)]
@@ -480,11 +452,11 @@ def main(args):
         # discovered by @fernbear.bsky.social https://x.com/hi_tysam/status/1879692937589875094
         optimizer1 = torch.optim.Adam(adam_params, weight_decay=args.weight_decay,
                                       betas=(0.8, 0.95), eps=1e-10, fused=True)
-        optimizer2 = Muon(hidden_matrix_params, lr=args.lr_muon, momentum=0.95, rank=local_rank, world_size=world_size)
+        # optimizer2 = Muon(hidden_matrix_params, lr=args.lr_muon, momentum=0.95, rank=local_rank, world_size=world_size)
+        optimizer2 = Muon(hidden_matrix_params, lr=args.lr_muon, momentum=0, nesterov=False, rank=local_rank, world_size=world_size)
+        logger.info("Working with STATELESS Muon")
         optimizers = [optimizer1, optimizer2]
-        # for opt in optimizers:
-        #     for group in opt.param_groups:
-        #         group["initial_lr"] = args.lr
+
     # 8-bit Adam
     else:
         raise ValueError(f"Optimizer {args.optimizer} not supported")
@@ -519,13 +491,43 @@ def main(args):
         )
 
     if args.continue_from is not None:
-        # TODO: fix to work with MUON
-        assert "muon" not in args.optimizer, "resume training not implemented for muon opt"
         logger.info("*" * 40)
+        logger.info(f"Loading model from {args.continue_from}")
+        # checkpoint_path = os.path.join(args.continue_from))
+        # model.load_state_dict(torch.load(checkpoint_path, map_location="cpu"), strict=True)
+        model = LlamaForCausalLM.from_pretrained(args.continue_from)
+        logger.info(f"Model successfully loaded (strict=True policy)")
+        optimizer_ch = torch.load(f"{args.continue_from}/optimizer.pt")
+
+        if os.path.exists(os.path.join(args.continue_from, "training_state.json")):
+            logger.info(
+                f"Loading training state like global_step, update_step, and tokens_seen from {args.continue_from}")
+            with open(os.path.join(args.continue_from, "training_state.json")) as f:
+                _old_state = json.load(f)
+            global_step = _old_state["global_step"]
+            update_step = _old_state["update_step"]
+            tokens_seen = _old_state["tokens_seen"]
+            tokens_seen_before = _old_state["tokens_seen_before"]
+            logger.info(f"global_step       : {global_step}")
+            # logger.info(f"update_step       : {update_step}")
+            logger.info(f"tokens_seen       : {tokens_seen}")
+            logger.info(f"tokens_seen_before: {tokens_seen_before}")
+            logger.info(f"Will train for {args.num_training_steps - update_step} update steps")
+        else:
+            logger.warning(f"Did not find training state in {args.continue_from}, global step will start from zero")
+        # logger.info("*" * 40)
+        # logger.info("*" * 40)
         logger.info(f"Loading optimier and scheduler from {args.continue_from}")
-        optimizer.load_state_dict(optimizer_ch['optimizer'])
-        scheduler.load_state_dict(optimizer_ch['scheduler'])
-        print(optimizer_ch['scheduler'])
+        if "muon" in args.optimizer.lower():
+            for opt_i, opt_name in enumerate(optimizer_ch.keys()):
+                assert optimizers[opt_i].__class__.__name__ == opt_name, "Error loading the optimizers for Muon"
+                optimizers[opt_i].load_state_dict(optimizer_ch[opt_name]['optimizer'])
+                schedulers[opt_i].load_state_dict(optimizer_ch[opt_name]['scheduler'])
+                print(f"{opt_name} scheduler: ", optimizer_ch[opt_name]['scheduler'])
+        else:
+            optimizer.load_state_dict(optimizer_ch['optimizer'])
+            scheduler.load_state_dict(optimizer_ch['scheduler'])
+            print(optimizer_ch['scheduler'])
 
     # global steps and others are defined above
     pad_idx = tokenizer.pad_token_id
@@ -549,9 +551,15 @@ def main(args):
         if local_step <= global_step and global_rank == 0:
             # if local_step % args.gradient_accumulation==0:
             #     scheduler.step()
-            # TODO: fix this with "muon": scheduler won't exist
-            print("local step", local_step, "global step:", global_step, 'scheduler', scheduler.get_lr())
-            continue
+            #TODO: the above was commented, don't know for sure if should be used
+            # but if it's not used, no need for this
+            # if "muon" in args.optimizer.lower():
+            #     print("local step", local_step, "global step:", global_step, 'scheduler', schedulers[-1].get_lr())
+            # else:
+            #     print("local step", local_step, "global step:", global_step, 'scheduler', scheduler.get_lr())
+            # continue
+            # just make local_step = global_step - 1
+            local_step = global_step - 1
         global_step += 1
 
         if update_step > args.num_training_steps:
