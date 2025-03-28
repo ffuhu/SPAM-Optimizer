@@ -452,9 +452,9 @@ def main(args):
         # discovered by @fernbear.bsky.social https://x.com/hi_tysam/status/1879692937589875094
         optimizer1 = torch.optim.Adam(adam_params, weight_decay=args.weight_decay,
                                       betas=(0.8, 0.95), eps=1e-10, fused=True)
-        # optimizer2 = Muon(hidden_matrix_params, lr=args.lr_muon, momentum=0.95, rank=local_rank, world_size=world_size)
-        optimizer2 = Muon(hidden_matrix_params, lr=args.lr_muon, momentum=0, nesterov=False, rank=local_rank, world_size=world_size)
-        logger.info("Working with STATELESS Muon")
+        optimizer2 = Muon(hidden_matrix_params, lr=args.lr_muon, momentum=0.95, rank=local_rank, world_size=world_size)
+        # optimizer2 = Muon(hidden_matrix_params, lr=args.lr_muon, momentum=0, nesterov=False, rank=local_rank, world_size=world_size)
+        # logger.info("Working with STATELESS Muon")
         optimizers = [optimizer1, optimizer2]
 
     # 8-bit Adam
