@@ -20,23 +20,26 @@ START_TIME=`date`; echo ">>> START: $START_TIME"
 # Check whether the GPU is available
 python -uc "import torch; print('>>> GPU available?', torch.cuda.is_available())"
 
-save_dir_base=/home/felix/Scratch/ua/SPAM-Optimizer/checkpoints
+save_dir_base=./checkpoints
 # Create a unique save directory by appending the date and time
 current_datetime=$(date +"%Y%m%d_%H%M%S")
-save_dir="${save_dir_base}_${current_datetime}"
+save_dir="${save_dir_base}/${current_datetime}"
 
 export OMP_NUM_THREADS=8
 
+opt="Adam"
+lr=1e-3
 for prj in 150
 do
 torchrun --standalone --nnodes 1 --nproc_per_node 1 torchrun_main.py \
+    --project_name "60m_${opt}_${lr}" \
     --model_config configs/llama_60m.json \
-    --lr 8e-4 \
+    --lr $lr \
     --density 1.0 \
     --update_gap 500 \
-    --batch_size 128  \
+    --batch_size 64  \
     --total_batch_size 512 \
-    --num_training_steps 20000 \
+    --num_training_steps 10000 \
     --warmup_steps 1000 \
     --weight_decay 0 \
     --dtype bfloat16 \

@@ -263,3 +263,38 @@ def compute_grad_norm_by_param_name(model):
     local_hidden_matrix = torch.norm(torch.cat(grads_hidden_matrix), 2)
 
     return local_norm, (local_embed, local_scalar, local_head, local_hidden_matrix)
+
+
+# detect gradient spikes as in SPAM
+def detect_grad_spikes(optimizers, threshold=50):
+
+    if not isinstance(optimizers, list):
+        optimizers = [optimizers]
+
+    gradient_spikes = [0]
+
+    for optimizer in optimizers:
+
+        for group in optimizer.param_groups:
+
+            for p in group["params"]:
+                if p.grad is None:
+                    continue
+
+                grad = p.grad
+                state = optimizer.state[p]
+
+                # If EMA states not yet initialized, cannot detect spikes
+                if "exp_avg_sq" not in state:
+                    break
+
+                # Threshold-based gradient masking
+                mask = (grad ** 2) > (threshold * state["exp_avg_sq"])
+                if mask.sum() > 0:
+                    idx_max_grad = torch.argmax(torch.abs(grad[mask]))
+                    max_grad = grad[mask][idx_max_grad]
+                    gradient_spikes.append(max_grad)
+
+    gradient_spike = max(gradient_spikes)
+
+    return gradient_spike

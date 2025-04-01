@@ -20,15 +20,15 @@ START_TIME=`date`; echo ">>> START: $START_TIME"
 # Check whether the GPU is available
 python -uc "import torch; print('>>> GPU available?', torch.cuda.is_available())"
 
-save_dir_base=/home/felix/Scratch/ua/SPAM-Optimizer/checkpoints
+save_dir_base=./checkpoints
 # Create a unique save directory by appending the date and time
 current_datetime=$(date +"%Y%m%d_%H%M%S")
-save_dir="${save_dir_base}_${current_datetime}"
+save_dir="${save_dir_base}/${current_datetime}"
 
 export OMP_NUM_THREADS=8
 
-num_training_steps=20000
 
+num_training_steps=20000
 opt="Adam"
 for prj in 150
 do
@@ -39,12 +39,12 @@ do
       echo ">>> OPTIMIZER: $opt"
       echo ">>> LR: $lr"
       torchrun --standalone --nnodes 1 --nproc_per_node 1 torchrun_main.py \
-          --project_name "${opt}_${lr}" \
+          --project_name "130m_${opt}_${lr}_gradspikes" \
           --model_config configs/llama_130m.json \
           --lr $lr \
           --density 1.0 \
           --update_gap 500 \
-          --batch_size 64  \
+          --batch_size 32  \
           --total_batch_size 512 \
           --num_training_steps $num_training_steps \
           --warmup_steps 1000 \
@@ -68,9 +68,9 @@ done
 #      # default lr: 8e-4
 #      # default num_training_steps 20_000
 #      echo ">>> OPTIMIZER: $opt"
-#      echo ">>> LR: $lr"
+#      echo ">>> LR: $lr_muon"
 #      torchrun --standalone --nnodes 1 --nproc_per_node 1 torchrun_main.py \
-#          --project_name "${opt}_${lr}" \
+#          --project_name "130m_${opt}_${lr_muon}_gradspikes" \
 #          --model_config configs/llama_130m.json \
 #          --lr_muon $lr_muon \
 #          --density 1.0 \

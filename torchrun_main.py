@@ -9,6 +9,8 @@ os.environ['RANK'] = '0'
 os.environ["LOCAL_RANK"] = '0'
 os.environ["WORLD_SIZE"] = '1'
 
+
+
 # # to ensure the socket is available for training
 # import socket
 # def is_port_available(port):
@@ -593,11 +595,18 @@ def main(args):
             if global_rank == 0:
                 grad_norm, (grad_embed, grad_scalar, grad_head, grad_hidden_matrix) = (
                     training_utils.compute_grad_norm_by_param_name(model))
-                wandb.log({"gradient_norm": grad_norm})
-                wandb.log({"grad_embed": grad_embed})
-                wandb.log({"grad_scalar": grad_scalar})
-                wandb.log({"grad_head": grad_head})
-                wandb.log({"grad_hidden_matrix": grad_hidden_matrix})
+                wandb.log({"gradient_norm": grad_norm,
+                           "grad_embed": grad_embed,
+                           "grad_scalar": grad_scalar,
+                           "grad_head": grad_head,
+                           "grad_hidden_matrix": grad_hidden_matrix}, step=global_step)
+
+                if global_step > args.grad_accu_steps:
+                    if "muon" in args.optimizer.lower():
+                        gradient_spikes = training_utils.detect_grad_spikes(optimizers, threshold=50)
+                    else:
+                        gradient_spikes = training_utils.detect_grad_spikes(optimizer, threshold=50)
+                    wandb.log({"gradient_spikes": gradient_spikes}, step=global_step)
 
             if "muon" in args.optimizer.lower():
                 for opt, sch in zip(optimizers, schedulers):
