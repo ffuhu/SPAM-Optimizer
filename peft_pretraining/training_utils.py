@@ -345,7 +345,7 @@ def log_max_grads(optimizers):
     return gradient_spike
 
 # compute gradient norm of the whole model
-@timeit # ~ 0.0093, slightly slower than `log_max_grads`
+# @timeit # ~ 0.0093, slightly slower than `log_max_grads`
 def log_max_grads_by_param_name(model):
 
     # Calculate global gradient norm

@@ -546,7 +546,12 @@ def main(args):
     # we'll never go through all the data, so no need for epochs
     # ##############################
 
+    print("TRAINIG WILL STOP AFTER 10.000 steps")
     for batch_idx, batch in enumerate(dataloader):
+
+        if global_step > 10_000:
+            print("Reached 10.000 steps, stopping training...")
+            break
 
         # print("batch_idx",batch_idx)
         local_step += 1
@@ -617,11 +622,11 @@ def main(args):
                 #         gradient_spikes = training_utils.detect_grad_spikes(optimizer, threshold=50)
                 #     wandb.log({"gradient_spikes": gradient_spikes}, step=global_step)
 
-                if "muon" in args.optimizer.lower():
-                    gradient_maxs = training_utils.log_max_grads(optimizers)
-                else:
-                    gradient_maxs = training_utils.log_max_grads(optimizer)
-                wandb.log({"gradient_maxs": gradient_maxs}, step=global_step)
+                # if "muon" in args.optimizer.lower():
+                #     gradient_maxs = training_utils.log_max_grads(optimizers)
+                # else:
+                #     gradient_maxs = training_utils.log_max_grads(optimizer)
+                # wandb.log({"gradient_maxs": gradient_maxs}, step=global_step)
 
             if "muon" in args.optimizer.lower():
                 for opt, sch in zip(optimizers, schedulers):
