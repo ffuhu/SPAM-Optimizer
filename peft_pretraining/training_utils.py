@@ -5,6 +5,22 @@ import torch
 from torch.optim.lr_scheduler import LambdaLR
 import transformers
 
+# to time functions
+import time
+from functools import wraps
+
+
+def timeit(func):
+    @wraps(func)
+    def timeit_wrapper(*args, **kwargs):
+        start_time = time.perf_counter()
+        result = func(*args, **kwargs)
+        end_time = time.perf_counter()
+        total_time = end_time - start_time
+        print(f'\t[{func.__name__} took {total_time:.4f} s.]')
+        return result
+    return timeit_wrapper
+
 
 def get_scheculer(
     optimizer,
@@ -298,3 +314,76 @@ def detect_grad_spikes(optimizers, threshold=50):
     gradient_spike = max(gradient_spikes)
 
     return gradient_spike
+
+
+# detect gradient spikes as in SPAM
+# @timeit ~ 0.007 segs, slightly faster than `log_max_grads_by_param_name`
+def log_max_grads(optimizers):
+
+    if not isinstance(optimizers, list):
+        optimizers = [optimizers]
+
+    gradient_max = [0]
+
+    for optimizer in optimizers:
+
+        for group in optimizer.param_groups:
+
+            for p in group["params"]:
+                if p.grad is None:
+                    continue
+
+                # Log the maximum (neg or pos) gradient
+                idx_max_grad = torch.argmax(torch.abs(p.grad.view(-1)))
+                max_grad = p.grad.view(-1)[idx_max_grad]
+                gradient_max.append(max_grad)
+
+    gradient_max = torch.tensor(gradient_max)
+    idx_max_grad = torch.argmax(torch.abs(gradient_max))
+    gradient_spike = gradient_max[idx_max_grad]
+
+    return gradient_spike
+
+# compute gradient norm of the whole model
+@timeit # ~ 0.0093, slightly slower than `log_max_grads`
+def log_max_grads_by_param_name(model):
+
+    # Calculate global gradient norm
+    grads = []
+    grads_embed = []
+    grads_scalar = []
+    grads_head = []
+    grads_hidden_matrix = []
+    for n, p in model.named_parameters():
+        if p.grad is not None:
+            grads.append(p.grad.detach().flatten())
+            if "embed" in n:
+                grads_embed.append(grads[-1])
+            if p.ndim < 2:
+                grads_scalar.append(grads[-1])
+            if p.ndim >= 2 and "embed" not in n and "lm_head" not in n:
+                grads_hidden_matrix.append(grads[-1])
+            if "lm_head" in n:
+                grads_head.append(grads[-1])
+
+    grads = torch.cat(grads)
+    idx_max_grads = torch.argmax(torch.abs(grads))
+    local_norm = grads[idx_max_grads]
+
+    grads_embed = torch.cat(grads_embed)
+    idx_max_grads_embed = torch.argmax(torch.abs(grads_embed))
+    local_embed = grads[idx_max_grads_embed]
+
+    grads_scalar = torch.cat(grads_scalar)
+    idx_max_grads_scalar = torch.argmax(torch.abs(grads_scalar))
+    local_scalar = grads[idx_max_grads_scalar]
+
+    grads_head = torch.cat(grads_head)
+    idx_max_grads_head = torch.argmax(torch.abs(grads_head))
+    local_head = grads[idx_max_grads_head]
+
+    grads_hidden_matrix = torch.cat(grads_hidden_matrix)
+    idx_max_grads_hidden_matrix = torch.argmax(torch.abs(grads_hidden_matrix))
+    local_hidden_matrix = grads[idx_max_grads_hidden_matrix]
+
+    return local_norm, (local_embed, local_scalar, local_head, local_hidden_matrix)

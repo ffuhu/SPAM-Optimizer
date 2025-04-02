@@ -601,12 +601,27 @@ def main(args):
                            "grad_head": grad_head,
                            "grad_hidden_matrix": grad_hidden_matrix}, step=global_step)
 
-                if global_step > args.grad_accu_steps:
-                    if "muon" in args.optimizer.lower():
-                        gradient_spikes = training_utils.detect_grad_spikes(optimizers, threshold=50)
-                    else:
-                        gradient_spikes = training_utils.detect_grad_spikes(optimizer, threshold=50)
-                    wandb.log({"gradient_spikes": gradient_spikes}, step=global_step)
+                # log max values (neg or pos
+                max_grad, (max_grad_embed, max_grad_scalar, max_grad_head, max_grad_hidden_matrix) = (
+                    training_utils.log_max_grads_by_param_name(model))
+                wandb.log({"max_gradient": max_grad,
+                           "max_grad_embed": max_grad_embed,
+                           "max_grad_scalar": max_grad_scalar,
+                           "max_grad_head": max_grad_head,
+                           "max_grad_hidden_matrix": max_grad_hidden_matrix}, step=global_step)
+
+                # if global_step > args.grad_accu_steps:
+                #     if "muon" in args.optimizer.lower():
+                #         gradient_spikes = training_utils.detect_grad_spikes(optimizers, threshold=50)
+                #     else:
+                #         gradient_spikes = training_utils.detect_grad_spikes(optimizer, threshold=50)
+                #     wandb.log({"gradient_spikes": gradient_spikes}, step=global_step)
+
+                if "muon" in args.optimizer.lower():
+                    gradient_maxs = training_utils.log_max_grads(optimizers)
+                else:
+                    gradient_maxs = training_utils.log_max_grads(optimizer)
+                wandb.log({"gradient_maxs": gradient_maxs}, step=global_step)
 
             if "muon" in args.optimizer.lower():
                 for opt, sch in zip(optimizers, schedulers):

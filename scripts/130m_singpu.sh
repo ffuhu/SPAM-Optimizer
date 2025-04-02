@@ -39,7 +39,7 @@ do
       echo ">>> OPTIMIZER: $opt"
       echo ">>> LR: $lr"
       torchrun --standalone --nnodes 1 --nproc_per_node 1 torchrun_main.py \
-          --project_name "130m_${opt}_${lr}_gradspikes" \
+          --project_name "130m_${opt}_${lr}_grads" \
           --model_config configs/llama_130m.json \
           --lr $lr \
           --density 1.0 \
@@ -70,7 +70,7 @@ done
 #      echo ">>> OPTIMIZER: $opt"
 #      echo ">>> LR: $lr_muon"
 #      torchrun --standalone --nnodes 1 --nproc_per_node 1 torchrun_main.py \
-#          --project_name "130m_${opt}_${lr_muon}_gradspikes" \
+#          --project_name "130m_${opt}_${lr_muon}_grads" \
 #          --model_config configs/llama_130m.json \
 #          --lr_muon $lr_muon \
 #          --density 1.0 \
